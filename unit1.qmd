@@ -1,0 +1,130 @@
+---
+title: "Unit 1: p > n Problem"
+format:
+  html:
+    theme: cosmo
+    toc: true
+    number-sections: true
+    code-fold: true
+---
+
+# STAT 494: Content Summary and Reflection
+
+## A Synthesis of GWAS Concepts, Labs, and Personal Goals
+
+### Author: Charles Batsaikhan
+
+![](images/gen.jpg){width="100%"}
+
+# 1. Introduction
+
+## 1.1 Motivation & Personal Learning Goals
+
+In this course, I aimed to:
+
+- **Implement appropriate statistical techniques** in genetics.  
+- **Improve my ability to read and summarize** journal articles.  
+- **Develop foundational skills** for future graduate work in Statistics, including time management, self-assessment, and working through challenges.
+
+This document synthesizes what I’ve learned, referencing:
+
+- **Class slides** on Genome-Wide Association Studies (GWAS), the p > n problem, Manhattan plots, QQ plots, etc.
+- **Lab assignments** exploring marginal regression, multiple testing correction, and simulation-based approaches.
+- **Journal clubs & reflections** that shaped my understanding of both the technical details and ethical considerations in statistical genetics.
+
+---
+
+# 2. GWAS Fundamentals
+
+## 2.1 What is GWAS?
+
+**Genome-Wide Association Studies** look for associations between genetic variants (e.g., SNPs) and traits & diseases. Each person's genetic data is represented as a matrix of 0/1/2 values. This denotes the count of the minor allele at each SNP. The big challenge often is: 
+
+- **Huge number of SNPs (p) vs. relatively smaller number of individuals (n)**
+- necessitating **marginal (single SNP) regression** rather than a full multiple regression.
+
+**Key Insight**: Ordinary Least Squares fails if $p>n$ because $X^TX$ becomes non-invertible.
+
+## 2.2 From Slides to Practice
+
+Some core things we discussed from the slides are:
+
+1. **Basic Regression Model**: $E[y|x]=\beta_0+\beta_1x$
+2. **Coding 0/1/2**: The number of minor alleles for each SNP.
+3. **Manhattan Plots**: Visualization of $-\log_{10}(p)$ vs. genomic position.
+
+![](images/manhattan_plot.png){width="100%"}
+
+4. **QQ plots**: Diagnostic to compare observed p-values/test statistics to the expected null distribution.
+
+![](images/qq.png){width="100%"}
+
+# 3. Lab Overviews
+
+## 3.1 Lab 1: The p>n Problem
+
+```r
+set.seed(494)
+n <- 100       # number of individuals
+p <- 1000      # number of SNPs
+snp_data <- replicate(p, rbinom(n, size=2, prob=0.1))
+trait_null <- rnorm(n, mean=65, sd=3)
+dat <- data.frame(y = trait_null, snp_data)
+# mod_full <- lm(y ~ ., data = dat) # leads to singular fit
+```
+
+## 3.2 Lab 2: Implementing & Visualizing Marginal Regression
+
+```r
+# Example (commented code)
+# library(snpStats)
+# library(broom)
+# library(ggplot2)
+# library(qqman)
+# X <- as(hapmap$genotypes, "numeric")
+# set.seed(494)
+# trait_y <- 2 * X[,"rs2476601"] + rnorm(nrow(X), 0, 1)
+# pvals <- numeric(ncol(X))
+# for (j in seq_len(ncol(X))) {
+#   mod <- lm(trait_y ~ X[, j])
+#   pvals[j] <- tidy(mod)$p.value[2]
+# }
+# results_df <- hapmap$map %>% mutate(P = pvals)
+# manhattan(results_df, chr="chromosome", bp="position", p="P", snp="snp.name", ylim=c(0,10))
+```
+
+## 3.3 Lab 3: Multiple Testing & LD
+
+```r
+# set.seed(494)
+# M <- 500
+# n <- nrow(X)
+# m <- ncol(X)
+# min_pvals <- replicate(M, {
+#   y_null <- rnorm(n, 0, 1)
+#   p_tmp <- numeric(m)
+#   for (j in seq_len(m)) {
+#     p_tmp[j] <- tidy(lm(y_null ~ X[, j]))$p.value[2]
+#   }
+#   min(p_tmp)
+# })
+# thresh_5 <- quantile(min_pvals, probs=0.05)
+```
+
+# 4. Reflection on Learning Goals
+
+## 4.1 Implementing Statistical Techniques
+
+- **Marginal Regression**: Successfully coded single-SNP testing.  
+- **Matrix Calculus & p > n**: Gained comfort with why OLS is undefined in high dimensions.  
+- **Multiple Testing**: Explored Bonferroni vs. simulation-based.
+
+## 4.2 Reading & Summarizing Articles
+
+- Weekly **Journal Club** exposed me to real-world GWAS methodologies.  
+- Learned to interpret Manhattan plots and QQ plots.
+
+## 4.3 Broader Skill Development
+
+- **Self-Assessment**: Labs and reflections forced me to regularly check progress on implementing regression code, reading documentation, and time management.  
+- **Handling Challenges**: Overcame frustrations with large loops in R by using caching (`cache:true`) and smaller data subsets.

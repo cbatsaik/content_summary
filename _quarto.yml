@@ -1,19 +1,25 @@
 project:
   type: website
+  output-dir: docs
 
 website:
-  title: "content_summary"
+  title: "STAT 494 Content Summary"
   navbar:
     left:
       - href: index.qmd
-        text: Home
-      - about.qmd
+        text: "Home"
+      - href: unit1.qmd
+        text: "Unit 1: p > n Problem"
+      - href: unit2.qmd
+        text: "Unit 2: Observational Data"
+      - href: unit3.qmd
+        text: "Unit 3"
+  page-footer: 
+    center: "Created by Charles Batsaikhan – Spring 2025"
 
 format:
   html:
     theme: cosmo
-    css: styles.css
+    css: styles.scss
     toc: true
-
-editor: visual
 

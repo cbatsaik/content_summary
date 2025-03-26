@@ -1,0 +1,197 @@
+---
+title: "STAT 494: Content Summary and Reflectioin"
+subtitle: "A Synthesis of GWAS Concepts, Labs, and Personal Goals"
+author: "Charles Batsaikhan"
+format:
+  pdf:
+    theme: cosmo
+    toc: true
+    number-sections: true
+    colorlinks: true
+---
+![](images/gen.jpg){width="100%"}
+
+# 1. Introduction
+
+## 1.1 Motivation & Personal Learning Goals
+
+In this course, I aimed to:
+
+- **Implement appropriate statistical techniques** in genetics.  
+- **Improve my ability to read and summarize** journal articles.  
+- **Develop foundational skills** for future graduate work in Statistics, including time management, self-assessment, and working through challenges.
+
+This document synthesizes what I’ve learned, referencing:
+
+- **Class slides** on Genome-Wide Association Studies (GWAS), the p > n problem, Manhattan plots, QQ plots, etc.
+- **Lab assignments** exploring marginal regression, multiple testing correction, and simulation-based approaches.
+- **Journal clubs & reflections** that shaped my understanding of both the technical details and ethical considerations in statistical genetics.
+
+---
+
+# 2. GWAS Fundanmentals
+
+## 2.1 What is GWAS?
+
+**Genome-Wide Association Studies** look for associations between genetic variants (For example SNPs) and traits & diseases. Each person's genetic data is represented as a matrix of 0/1/2 values. This denotes the count of the minor allele at each SNP. The big challenge often is: 
+
+- **Huge number of SNPs (p) vs. relatively smaller number of individuals (n)**
+- necessitating **marginal (single SNP) regression** rather than a full multiple regression.
+
+**key Insights**: Ordinary Least Squares fails if $p>n$ because $X^TX$ becomes non-invertible.
+
+## 2.2 From Slides to Practice
+
+Some core things we discussed from the slides are:
+
+1. **Basic Regression Model**: $E[y|x]=\beta_0+\beta_1x$. This equation tells us that the expected value of the outcome $y$ depends linearly on the predictor $x$. In GWAS context, $x$ is typically represents the genotype at a single SNP coded as 0, 1, or 2. WHen we do single-SNP tests, we fit many separate models of this form-one for each SNP- to see if the SNP is associated with the trait.
+
+2. **Coding 0/1/2**: The number of minor alleles for each SNP. Each individual can carry 0, 1, or 2 copies of the minor allele at a given SNP position. This numeric coding is convenient for regression because it transforms categorical genotypes (AA, AG, GG) into a single numeric predictor. The coefficient $\beta_1$ in the regression then captures how each additional minor allele affects the trait on average. 
+
+3. **Manhattan Plots**: Visualization of $-\log_{10}(p)$ vs. genomic position. 
+
+![](images/manhattan_plot.png){width="100%"}
+
+This is the standard way to visualize the results of a GWAS, plotting $-\log_{10}(p)$ on the y-axis, for each SNP's p-value, against the physical position of the SNP on the x-axis. Tall peaks in the plot means to have a very small p-values. This suggests that regions of the genome potentially associated with the trait.
+
+4. **QQ plots**: Diagnostic to compare observed p-values/test statistics to the expected null distribution.
+
+![](images/qq.png){width="100%"}
+
+The qq plot compares the observed distribution of test statistics (or p-values) to what you would expect if there were no true associations. Points that deviate above the diagonal at the upper tail suggest either association or possible cofounding. A tight fit along the diagonal in the rest of the distribution indicates good alignment with the null.
+
+# 3. Lab Overviews
+
+## 3.1 Lab 1: The p>n Problem
+
+In Lab 1, we simulated toy genetic data and tried to fit a multiple linear regression with more predictors (SNPs) than observations. This shows why the least squares solution is not defined for $X^TX$ that is singular.
+```{r}
+# Example snippet from Lab 1
+set.seed(494)
+n <- 100       # number of individuals
+p <- 1000      # number of SNPs
+
+# Simulate genotype data: each SNP is 0, 1, or 2 with MAF=0.1
+snp_data <- replicate(p, rbinom(n, size=2, prob=0.1))
+# Simulate a 'null' trait
+trait_null <- rnorm(n, mean=65, sd=3)
+
+# Attempt a multiple linear regression (this will cause singularities)
+dat <- data.frame(y = trait_null, snp_data)
+# mod_full <- lm(y ~ ., data = dat) # leads to singular fit
+
+```
+
+- A real-world GWAS can involve tens or hundreds of thousands of SNPs, but rarely more than a few thousand or tens of thousands of participants—thus p > n is common.
+- Attempting a single multiple regression with all SNPs at once is generally infeasible in both human data and simulation—hence the need for single-SNP methods.
+
+
+## 3.2 Lab 2: Implementing & Visualizing Marginal Regression
+
+For Lab 2, we moved on to real genotype data from HapMap. Some key steps from this labs are:
+
+1. **Read PLINK data** using read.plink()
+2. **Convert** the SnpMatrix to numeric matrix of 0/1/2.
+3. **Fit single-SNP regressions** to get p-values.
+4. **Plot** using Manhattan and QQ plots.
+
+```{r}
+# # Suppose 'hapmap' is a list from read.plink(bed, bim, fam)
+# library(snpStats)
+# library(broom)
+# library(ggplot2)
+# library(qqman)
+# 
+# #Convert genotype data to numeric 0/1/2
+# X <- as(hapmap$genotypes, "numeric")
+# 
+# #Simulate or read a trait
+# set.seed(494)
+# trait_y <- 2 * X[,"rs2476601"] + rnorm(nrow(X), 0, 1)
+# 
+# # Fit marginal models
+# pvals <- numeric(ncol(X))
+# for (j in seq_len(ncol(X))) {
+#   mod <- lm(trait_y ~ X[, j])
+#   pvals[j] <- tidy(mod)$p.value[2]
+# }
+# 
+# #Create a results dataframe for plotting
+# library(dplyr)
+# results_df <- hapmap$map %>%
+#   mutate(P = pvals)
+# 
+# #Manhattan plot
+# manhattan(results_df,
+#           chr="chromosome", bp="position",
+#           p="P", snp="snp.name",
+#           ylim=c(0,10))
+
+```
+
+- Learned the workflow of a typical GWAS: import data → run regressions → interpret
+- Reinforced the importance of multiple testing corrections once we see how many p-values we generate.
+
+
+## 3.3 Lab 3: Multiple Testing & LD
+
+In Lab 3, we learned how to adjust for multiple testing:
+
+- **Bonferroni**: $\alpha_{\text{adj}}=\frac {\alpha}{m}$
+- **Simulation-based** approach to simulate a null trait, run GWAS and record min p-value, and repeat many times and take the $\alpha$ quantile of these min p-values.
+
+```{r}
+# # Example: simulation-based threshold
+# set.seed(494)
+# M <- 500    # number of simulation replicates
+# n <- nrow(X)  # same number of individuals
+# m <- ncol(X)  # number of SNPs
+# 
+# min_pvals <- replicate(M, {
+#   y_null <- rnorm(n, 0, 1)
+#   p_tmp <- numeric(m)
+#   for (j in seq_len(m)) {
+#     p_tmp[j] <- tidy(lm(y_null ~ X[, j]))$p.value[2]
+#   }
+#   min(p_tmp)  # record min p-value from this replicate
+# })
+# 
+# # Estimate significance threshold (5th percentile)
+# thresh_5 <- quantile(min_pvals, probs=0.05)
+# thresh_5
+
+```
+
+
+# 4. Reflection on Learning Goals
+
+- Lab 1 laid the mathematical groundwork for why single-SNP testing is the approach in GWAS.
+- Lab 2 provided a hands-on GWAS pipeline—from data import to Manhattan plots—reinforcing both theoretical and applied learning goals.
+- Lab 3 introduced advanced, crucial steps in real GWAS analyses: multiple testing correction and the awareness of LD.
+
+## 4.1 Implementing Statistical Techniques
+
+- **Marginal Regression**: Successfully coded single-SNP testing.  
+- **Matrix Calculus & p > n**: Gained comfort with why OLS is undefined in high dimensions.  
+- **Multiple Testing**: Explored Bonferroni vs. simulation-based.
+
+
+## 4.2 Reading & Summarizing Articles
+
+- Weekly **Journal Club** exposed me to real-world GWAS methodologies.  
+- Learned to interpret Manhattan plots, and QQ plots.
+
+
+
+## 4.3 Broader Skill Development
+
+- **Self-Assessment**: Labs and reflections forced me to regularly check progress on implementing regression code, reading documentation, and time management.  
+- **Handling Challenges**: Overcame frustrations with large loops in R by using caching (`cache:true`) and smaller data subsets.
+
+
+
+
+
+
+
+
