@@ -1,18 +1,16 @@
 ---
-title: "Unit 1: p > n Problem"
+title: "Unit 1: p > n problem"
+author: "Charles Batsaikhan"
 format:
   html:
-    theme: cosmo
     toc: true
     number-sections: true
     code-fold: true
+    theme: cosmo
 ---
 
-# STAT 494: Content Summary and Reflection
+# A Synthesis of GWAS Concepts, Labs, and Personal Goals
 
-## A Synthesis of GWAS Concepts, Labs, and Personal Goals
-
-### Author: Charles Batsaikhan
 
 ![](images/gen.jpg){width="100%"}
 
@@ -36,16 +34,22 @@ This document synthesizes what I’ve learned, referencing:
 
 # 2. GWAS Fundamentals
 
-## 2.1 What is GWAS?
 
-**Genome-Wide Association Studies** look for associations between genetic variants (e.g., SNPs) and traits & diseases. Each person's genetic data is represented as a matrix of 0/1/2 values. This denotes the count of the minor allele at each SNP. The big challenge often is: 
+
+**Genome-Wide Association Studies** look for associations between genetic variants (e.g., SNPs) and traits & diseases. Each person's genetic data is represented as a matrix of 0/1/2 values. This denotes the count of the minor allele at each SNP. The big challenge often is:
 
 - **Huge number of SNPs (p) vs. relatively smaller number of individuals (n)**
 - necessitating **marginal (single SNP) regression** rather than a full multiple regression.
 
 **Key Insight**: Ordinary Least Squares fails if $p>n$ because $X^TX$ becomes non-invertible.
 
-## 2.2 From Slides to Practice
+
+
+**Computational Challenges and Multiple Testing**
+
+- **Computational Complexity**: With millions of SNPs and thousands of individuals, marginal regression becomes computationally demanding. Efficient algorithms and parallelization are used to process large-scale data.
+
+- **Multiple Testing Problem**: Performing millions of tests inflates the probability of false positives. Without correction, the significance threshold of p = 0.05 would result in thousands of false discoveries.
 
 Some core things we discussed from the slides are:
 
@@ -63,7 +67,7 @@ Some core things we discussed from the slides are:
 
 ## 3.1 Lab 1: The p>n Problem
 
-```r
+```{r}
 set.seed(494)
 n <- 100       # number of individuals
 p <- 1000      # number of SNPs
@@ -73,10 +77,10 @@ dat <- data.frame(y = trait_null, snp_data)
 # mod_full <- lm(y ~ ., data = dat) # leads to singular fit
 ```
 
-## 3.2 Lab 2: Implementing & Visualizing Marginal Regression
 
-```r
-# Example (commented code)
+
+## 3.2 Lab 2: Implementing & Visualizing Marginal Regression
+```{r}
 # library(snpStats)
 # library(broom)
 # library(ggplot2)
@@ -92,10 +96,18 @@ dat <- data.frame(y = trait_null, snp_data)
 # results_df <- hapmap$map %>% mutate(P = pvals)
 # manhattan(results_df, chr="chromosome", bp="position", p="P", snp="snp.name", ylim=c(0,10))
 ```
+This is a simple implementation of a marginal regression in GWAS. Although effective for finding associations, this approach can lead to false positives if multiple testing corrections are not applied.
+
+**Bonferroni vs. Simulation-Based Correction**
+
+Bonferroni Correction: Divides the significance level by the number of tests. Simple but overly conservative, particularly when SNPs are correlated.
+
+Simulation-Based Methods: Generate null datasets to empirically determine significance thresholds, reducing false positives while maintaining power.
+
+
 
 ## 3.3 Lab 3: Multiple Testing & LD
-
-```r
+```{r}
 # set.seed(494)
 # M <- 500
 # n <- nrow(X)
@@ -110,6 +122,7 @@ dat <- data.frame(y = trait_null, snp_data)
 # })
 # thresh_5 <- quantile(min_pvals, probs=0.05)
 ```
+
 
 # 4. Reflection on Learning Goals
 

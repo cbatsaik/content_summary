@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Charles Batsaikhan">
 
-<title>Unit 2 – STAT 494 Content Summary</title>
+<title>Statistical Genetics - Unit 2 – STAT 494 Content Summary</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -103,11 +104,40 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -152,19 +182,44 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a></li>
+  <li><a href="#key-concepts" id="toc-key-concepts" class="nav-link" data-scroll-target="#key-concepts"><span class="header-section-number">2</span> Key Concepts</a></li>
+  <li><a href="#genetic-ancestry-and-population-structure" id="toc-genetic-ancestry-and-population-structure" class="nav-link" data-scroll-target="#genetic-ancestry-and-population-structure"><span class="header-section-number">3</span> Genetic Ancestry and Population Structure</a>
+  <ul class="collapse">
+  <li><a href="#local-vs-global-ancestry" id="toc-local-vs-global-ancestry" class="nav-link" data-scroll-target="#local-vs-global-ancestry"><span class="header-section-number">3.1</span> Local vs Global Ancestry</a></li>
+  </ul></li>
+  <li><a href="#principle-component-analysis-pca" id="toc-principle-component-analysis-pca" class="nav-link" data-scroll-target="#principle-component-analysis-pca"><span class="header-section-number">4</span> Principle Component Analysis (PCA)</a>
+  <ul class="collapse">
+  <li><a href="#performing-pca-in-r" id="toc-performing-pca-in-r" class="nav-link" data-scroll-target="#performing-pca-in-r"><span class="header-section-number">4.1</span> Performing PCA in R</a></li>
+  <li><a href="#visualzing-pca-results" id="toc-visualzing-pca-results" class="nav-link" data-scroll-target="#visualzing-pca-results"><span class="header-section-number">4.2</span> Visualzing PCA results</a></li>
+  </ul></li>
+  <li><a href="#confounding-and-bias-in-gwas" id="toc-confounding-and-bias-in-gwas" class="nav-link" data-scroll-target="#confounding-and-bias-in-gwas"><span class="header-section-number">5</span> Confounding and Bias in GWAS</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Unit 2</h1>
+<h1 class="title">Statistical Genetics - Unit 2</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Charles Batsaikhan </p>
+          </div>
+  </div>
     
   
     
@@ -175,15 +230,193 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>About this site</p>
+<section id="introduction" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
+<p>In this unit, we learned how genetic ancestry influences GWAS and PCA can be applied to adjust for population structure. Through journal clubs discussions, simulation studies, lab, and lectures, we examined the challenges caused by confounding, conducted PCA on genetic data, and evaluated the results using few diagnostic tools.</p>
+</section>
+<section id="key-concepts" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Key Concepts</h1>
+<ul>
+<li><strong>Genetic Ancestry and Population Structure:</strong> Understanding how genetic variation is distributed across populations.</li>
+<li><strong>Confounding in GWAS:</strong> Recognizing ancestry as a potential confounder.</li>
+<li><strong>PCA for Population Structure Inference:</strong> Extracting principal components to capture genetic similarities/differences.</li>
+<li><strong>Adjusting for Population Structure:</strong> Using PCs as covariates in GWAS to control for confounding.</li>
+<li><strong>Evaluating Results:</strong> Assessing the number of PCs, interpreting loadings, and using scree plots.</li>
+<li><strong>Omitted Variable Bias:</strong> Understanding the mathematical proof</li>
+<li><strong>SNPRelate:</strong> Implementing PCA using an R package designed for genetic data analysis.</li>
+</ul>
+</section>
+<section id="genetic-ancestry-and-population-structure" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Genetic Ancestry and Population Structure</h1>
+<section id="local-vs-global-ancestry" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="local-vs-global-ancestry"><span class="header-section-number">3.1</span> Local vs Global Ancestry</h2>
+<ul>
+<li>Local Ancestry refers to specific segments of DNA inherited from different ancestral populations.</li>
+<li>Global Ancestry represents the proportion of DNA inherited from various populations across the entire genome.</li>
+</ul>
+<p>For example: A genome that is 40% from Population 1 and 60% from Population 2 reflects global ancestry proportions of 0.40 and 0.60.</p>
+<p>Challange: Determining the ancestral origin of genetic segments is difficult without robust comparison data.</p>
+</section>
+</section>
+<section id="principle-component-analysis-pca" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Principle Component Analysis (PCA)</h1>
+<p>PCA is a dimension reduction techniques that indentifies linear combinations of SNPs to capture the most variance in the data. PCs often reflect population structure.</p>
+<p><strong>Mathematical Formulation</strong>: <span class="math display">\[PC_k=\sum^p_{j=1}a_{kj}X_j\]</span> Where:</p>
+<ul>
+<li><span class="math inline">\(PC_k\)</span>= Principle Component K</li>
+<li><span class="math inline">\(a_{kj}=\)</span> Loading coefficient for SNP j in PC k</li>
+<li><span class="math inline">\(X_j=\)</span> SNP j value</li>
+</ul>
+<section id="performing-pca-in-r" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="performing-pca-in-r"><span class="header-section-number">4.1</span> Performing PCA in R</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+✔ purrr     1.0.4     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GGally)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Registered S3 method overwritten by 'GGally':
+  method from   
+  +.gg   ggplot2</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>pcadata <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">'https://mac-stat.github.io/statgen/data/pca_toy_data.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 1000 Columns: 17
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+dbl (17): population, trait, SNP1, SNP2, SNP3, SNP4, SNP5, SNP6, SNP7, SNP8,...
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform PCA</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>geno <span class="ot">&lt;-</span> pcadata <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>population, <span class="sc">-</span>trait)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>pca_out <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(geno, <span class="at">center =</span> <span class="cn">TRUE</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>pca_scores <span class="ot">&lt;-</span> pca_out<span class="sc">$</span>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="visualzing-pca-results" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="visualzing-pca-results"><span class="header-section-number">4.2</span> Visualzing PCA results</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>pca_scores_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(pca_scores) <span class="sc">%&gt;%</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">population =</span> pcadata<span class="sc">$</span>population)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pca_scores_df, <span class="fu">aes</span>(<span class="at">x =</span> PC1, <span class="at">y =</span> PC2, <span class="at">color =</span> <span class="fu">as.factor</span>(population))) <span class="sc">+</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.7</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"PC1 vs. PC2 Scores"</span>, <span class="at">color =</span> <span class="st">"Population"</span>) <span class="sc">+</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="unit2_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This is the Score plot. This tells us…</p>
+</section>
+</section>
+<section id="confounding-and-bias-in-gwas" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Confounding and Bias in GWAS</h1>
+<p>In a GWAS, confounding can occur when genetic ancestry affects both the genotype and the phenotype. For instance, consider a study investigating the association between a specific SNP and a disease. If the SNP has different allele frequencies across populations and the disease prevalence also varies by ancestry due to environmental or lifestyle factors, then ancestry becomes a confounder.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggdag)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'ggdag'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:stats':
+
+    filter</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dagitty)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>dag_conf <span class="ot">&lt;-</span> <span class="fu">dagitty</span>(<span class="st">'</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="st">dag {</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="st">  Ancestry -&gt; Genotype</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="st">  Ancestry -&gt; Trait</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="st">  Genotype -&gt; Trait</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="st">'</span>)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggdag</span>(dag_conf) <span class="sc">+</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Ancestry as a Confounder"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="unit2_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Ancestry influences both the SNP and the Trait, and this leads to confounding.</strong></p>
+<p>This is a <strong>R Code</strong> for adjusting for Confounding using PCA:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>pc1 <span class="ot">&lt;-</span> pca_scores[, <span class="st">"PC1"</span>]</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(trait <span class="sc">~</span> SNP1 <span class="sc">+</span> pc1, <span class="at">data =</span> pcadata)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 2</code></pre>
+<pre><code>
+Call:
+lm(formula = trait ~ SNP1 + pc1, data = pcadata)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.2487 -0.7768 -0.0268  0.7581  3.6914 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   1.6271     0.1174  13.853   &lt;2e-16 ***
+SNP1         -0.3624     0.1115  -3.249   0.0012 ** 
+pc1           0.7383     0.0712  10.369   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.163 on 997 degrees of freedom
+Multiple R-squared:  0.3344,    Adjusted R-squared:  0.3331 
+F-statistic: 250.5 on 2 and 997 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
+<p>This adjustment helps reduce the confounding effect by incorporating the first principal component as a covariate.</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

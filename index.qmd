@@ -11,13 +11,11 @@ about:
 
 # About This Project
 
-This site contains content summaries for each unit in **STAT 494: Statistical Genetics**.
 
+This website contains my summaries of key concepts from the Statistical Genetics (STAT 494) course. Choose from the summaries below to explore further:
 
-This site contains content summaries for each unit in STAT 494: Statistical Genetics.
-
-
-
+- [Content Summary 1: p > n Problem](unit1.qmd)
+- [Content Summary 2: Genetic Association, Population Stratification, and Omitted Variable Bias](unit2.qmd)
 
 
 

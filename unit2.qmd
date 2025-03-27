@@ -1,9 +1,108 @@
 ---
-title: "Unit 2"
+title: "Statistical Genetics - Unit 2"
+author: "Charles Batsaikhan"
+format:
+  html:
+    toc: true
+    number-sections: true
+    code-fold: true
+    theme: cosmo
 ---
 
-About this site
+
+
+# Introduction
+
+In this unit, we learned how genetic ancestry influences GWAS and PCA can be applied to adjust for population structure. Through journal clubs discussions, simulation studies, lab, and lectures, we examined the challenges caused by confounding, conducted PCA on genetic data, and evaluated the results using few diagnostic tools.
+
+# Key Concepts
+
+- **Genetic Ancestry and Population Structure:** Understanding how genetic variation is distributed across populations.
+- **Confounding in GWAS:** Recognizing ancestry as a potential confounder.
+- **PCA for Population Structure Inference:** Extracting principal components to capture genetic similarities/differences.
+- **Adjusting for Population Structure:** Using PCs as covariates in GWAS to control for confounding.
+- **Evaluating Results:** Assessing the number of PCs, interpreting loadings, and using scree plots.
+- **Omitted Variable Bias:** Understanding the mathematical proof
+- **SNPRelate:** Implementing PCA using an R package designed for genetic data analysis.
+
+# Genetic Ancestry and Population Structure
+
+## Local vs Global Ancestry
+
+- Local Ancestry refers to specific segments of DNA inherited from different ancestral populations.
+- Global Ancestry represents the proportion of DNA inherited from various populations across the entire genome.
+
+For example: A genome that is 40% from Population 1 and 60% from Population 2 reflects global ancestry proportions of 0.40 and 0.60.
+
+Challange: Determining the ancestral origin of genetic segments is difficult without robust comparison data.
+
+# Principle Component Analysis (PCA)
+
+PCA is a dimension reduction techniques that indentifies linear combinations of SNPs to capture the most variance in the data. PCs often reflect population structure.
+
+**Mathematical Formulation**: $$PC_k=\sum^p_{j=1}a_{kj}X_j$$ Where:
+
+- $PC_k$= Principle Component K
+- $a_{kj}=$ Loading coefficient for SNP j in PC k
+- $X_j=$ SNP j value
+
+
+## Performing PCA in R
+```{r}
+library(tidyverse)
+library(GGally)
+
+# Load data
+pcadata <- read_csv('https://mac-stat.github.io/statgen/data/pca_toy_data.csv')
+
+# Perform PCA
+geno <- pcadata %>% select(-population, -trait)
+pca_out <- prcomp(geno, center = TRUE, scale = TRUE)
+pca_scores <- pca_out$x
+```
+
+## Visualzing PCA results
 
 ```{r}
-1 + 1
+pca_scores_df <- as.data.frame(pca_scores) %>%
+  mutate(population = pcadata$population)
+
+ggplot(pca_scores_df, aes(x = PC1, y = PC2, color = as.factor(population))) +
+  geom_point(alpha = 0.7, size = 2) +
+  labs(title = "PC1 vs. PC2 Scores", color = "Population") +
+  theme_minimal()
 ```
+This is the Score plot. This tells us...
+
+
+# Confounding and Bias in GWAS
+
+In a GWAS, confounding can occur when genetic ancestry affects both the genotype and the phenotype. For instance, consider a study investigating the association between a specific SNP and a disease. If the SNP has different allele frequencies across populations and the disease prevalence also varies by ancestry due to environmental or lifestyle factors, then ancestry becomes a confounder.
+
+```{r}
+library(ggdag)
+library(dagitty)
+dag_conf <- dagitty('
+dag {
+  Ancestry -> Genotype
+  Ancestry -> Trait
+  Genotype -> Trait
+}
+')
+
+ggdag(dag_conf) +
+  theme_minimal() +
+  labs(title = "Ancestry as a Confounder")
+```
+
+**Ancestry influences both the SNP and the Trait, and this leads to confounding.**
+
+This is a **R Code** for adjusting for Confounding using PCA:
+
+```{r}
+pc1 <- pca_scores[, "PC1"]
+model <- lm(trait ~ SNP1 + pc1, data = pcadata)
+summary(model)
+```
+
+This adjustment helps reduce the confounding effect by incorporating the first principal component as a covariate.
