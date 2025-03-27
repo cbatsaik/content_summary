@@ -19,7 +19,10 @@ website:
 
 format:
   html:
-    theme: cosmo
-    css: styles.scss
-    toc: true
+    theme:
+      light: yeti
+      dark: cyborg
+    css: styles.css
+
+
 

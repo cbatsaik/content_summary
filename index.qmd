@@ -6,4 +6,31 @@ about:
   template: jolla
 ---
 
+
+<div id="particles-js" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1;"></div>
+
+# About This Project
+
+This site contains content summaries for each unit in **STAT 494: Statistical Genetics**.
+
+
 This site contains content summaries for each unit in STAT 494: Statistical Genetics.
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script>
+  particlesJS('particles-js', {
+    particles: {
+      number: { value: 80, density: { enable: true, value_area: 800 } },
+      color: { value: '#007bff' },
+      shape: { type: 'circle' },
+      opacity: { value: 0.5, random: true },
+      size: { value: 3, random: true },
+      move: { enable: true, speed: 3 }
+    }
+  });
+</script>
