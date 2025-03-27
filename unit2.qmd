@@ -106,3 +106,78 @@ summary(model)
 ```
 
 This adjustment helps reduce the confounding effect by incorporating the first principal component as a covariate.
+
+
+
+
+**Collider Example**:
+
+A collider occurs when a variable is influenced by both the genotype and the trait. For example, suppose cholesterol levels are influenced by both smoking status (predictor) and body weight (outcome). If cholesterol levels are controlled for in the analysis, it could introduce a spurious association between smoking and body weight.
+
+```{r}
+dag_col <- dagitty("
+dag {
+Smoking -> Cholesterol
+Weight -> Cholesterol}")
+
+ggdag(dag_col)+
+  theme_minimal()+
+  ggtitle("Collider bias example")
+```
+
+**By adjusting for the collider, a false association between smoking and weight may be introduced.** So, key takeaways are: (1) Adjust for confounders to reduce bias. (2) Avoid adjusting for colliders as it can introduce false associations.
+
+# Adjusting for Population Structure in GWAS
+
+To adjust for population structure, we can include PCs as covariates in the GWAS model:
+
+$$E[Y|X_j, \pi]=\alpha+\beta_j X_j +\gamma \pi$$ Where:
+
+- $Y$ is the trait
+- $X_j$=SNP j value
+- $\pi$=Genetic ancestry estimate
+
+
+
+```{r}
+pc1 <- pca_scores[, "PC1"]
+model <- lm(trait ~ SNP1+pc1, data=pcadata)
+summary(model)
+```
+
+# Evaluating PCA Results
+
+## Scree Plot
+
+A scree plot helps determine how many PCs are necessary to capture the majority of variance.
+
+```{r}
+library(SNPRelate)
+
+# Open the GDS file
+genofile <- snpgdsOpen(snpgdsExampleFileName())
+
+# Perform PCA using SNPRelate
+pca <- snpgdsPCA(genofile, num.thread = 2)
+
+# Calculate variance explained
+pc.percent <- pca$varprop * 100
+
+# Plot the scree plot
+plot(pc.percent, type = "b",
+     xlab = "Principal Component",
+     ylab = "Percent Variance Explained",
+     main = "Scree Plot using SNPRelate")
+
+# Close the GDS file
+snpgdsClose(genofile)
+
+```
+
+- PC1 captures the largest proportion of variance
+- The variance explained deceases with each subsequent PC.
+
+
+
+
+

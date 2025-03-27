@@ -96,5 +96,12 @@
     "title": "Statistical Genetics - Unit 2",
     "section": "4.2 Visualzing PCA results",
     "text": "4.2 Visualzing PCA results\n\n\nCode\npca_scores_df &lt;- as.data.frame(pca_scores) %&gt;%\n  mutate(population = pcadata$population)\n\nggplot(pca_scores_df, aes(x = PC1, y = PC2, color = as.factor(population))) +\n  geom_point(alpha = 0.7, size = 2) +\n  labs(title = \"PC1 vs. PC2 Scores\", color = \"Population\") +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\nThis is the Score plot. This tells us…"
+  },
+  {
+    "objectID": "unit2.html#scree-plot",
+    "href": "unit2.html#scree-plot",
+    "title": "Statistical Genetics - Unit 2",
+    "section": "7.1 Scree Plot",
+    "text": "7.1 Scree Plot\nA scree plot helps determine how many PCs are necessary to capture the majority of variance.\n\n\nCode\nlibrary(SNPRelate)\n\n\nLoading required package: gdsfmt\n\n\nWarning: package 'gdsfmt' was built under R version 4.4.2\n\n\nCode\n# Open the GDS file\ngenofile &lt;- snpgdsOpen(snpgdsExampleFileName())\n\n# Perform PCA using SNPRelate\npca &lt;- snpgdsPCA(genofile, num.thread = 2)\n\n\nPrincipal Component Analysis (PCA) on genotypes:\nExcluding 365 SNPs on non-autosomes\nExcluding 1 SNP (monomorphic: TRUE, MAF: NaN, missing rate: NaN)\n    # of samples: 279\n    # of SNPs: 8,722\n    using 2 threads\n    # of principal components: 32\nPCA:    the sum of all selected genotypes (0,1,2) = 2446510\nCPU capabilities:\nThu Mar 27 18:27:20 2025    (internal increment: 1760)\n\n[..................................................]  0%, ETC: ---        \n[==================================================] 100%, completed, 0s\nThu Mar 27 18:27:20 2025    Begin (eigenvalues and eigenvectors)\nThu Mar 27 18:27:20 2025    Done.\n\n\nCode\n# Calculate variance explained\npc.percent &lt;- pca$varprop * 100\n\n# Plot the scree plot\nplot(pc.percent, type = \"b\",\n     xlab = \"Principal Component\",\n     ylab = \"Percent Variance Explained\",\n     main = \"Scree Plot using SNPRelate\")\n\n\n\n\n\n\n\n\n\nCode\n# Close the GDS file\nsnpgdsClose(genofile)\n\n\n\nPC1 captures the largest proportion of variance\nThe variance explained deceases with each subsequent PC."
   }
 ]
