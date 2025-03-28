@@ -74,12 +74,145 @@ ggplot(pca_scores_df, aes(x = PC1, y = PC2, color = as.factor(population))) +
 ```
 This is the Score plot. This tells us...
 
+# Evaluating PCA Results Efficiently
+
+## SNPRelate Package
+
+SNPRelate is a powerful R package designed for analyzing large-scale genomic datasets efficiently. It is widely used for performing Principal Component Analysis (PCA), kinship analysis, Linkage Disequilibrium (LD) pruning, and other genetic association studies. This package is particularly beneficial in genome-wide association studies (GWAS) where population structure can act as a confounder, leading to spurious associations.
+
+Loading the library and exploring the tutorial
+```{r}
+library(SNPRelate)
+vignette("SNPRelate", package = "SNPRelate")
+```
+
+SNPRelate uses Genomic Data Structure (GDS) files for efficient data storage. For example, 279 individuals with sample IDs stored as sample.id, and 9088 SNPs with SNP information like position, chromosomes, and genotypes.
+```{r}
+genofile <- snpgdsOpen(snpgdsExampleFileName())
+genofile
+
+snpgdsClose(genofile)
+```
+
+We can extract population information. (1) CEU: Utah resient of European ancestry. (2) HCB: Han Chinese in Beijing. (3) JPT: Japanese in Tokyo. (4) YRI: Yoruba from Nigeria.
+```{r}
+genofile <- snpgdsOpen(snpgdsExampleFileName())
+pop_code <- read.gdsn(index.gdsn(genofile, "sample.annot/pop.group"))
+table(pop_code)
+snpgdsClose(genofile)
+```
+
+Linkage Disequilibrium pruning is a pre-processing step that removes highly correlated SNPs to reduce redundancy and imporve computational efficiency.
+```{r}
+genofile <- snpgdsOpen(snpgdsExampleFileName())
+set.seed(494)
+snpset <- snpgdsLDpruning(genofile, ld.threshold = 0.2)
+snpset.id <- unlist(snpset)
+length(snpset.id)
+snpgdsClose(genofile)
+```
+- **6,457 SNPs** remain from the original 9,088.
+
+We can now run **PCA** on the LD-pruned SNPs.
+
+```{r}
+genofile <- snpgdsOpen(snpgdsExampleFileName())
+pca <- snpgdsPCA(genofile, snp.id = snpset.id, num.thread = 2)
+snpgdsClose(genofile)
+```
+
+- **Eigenvalues and Eigenvectors** are calculated to represent the principal components (PCs), and SNPRelate can compute up to 32 PCs using an very efficient algorithms.
+
+## Visualizing SNPRelate PCA Results
+
+
+Below is the **Score plot** of the first two PCs:
+```{r}
+genofile <- snpgdsOpen(snpgdsExampleFileName())
+sample.id <- read.gdsn(index.gdsn(genofile, "sample.id"))
+
+tab <- data.frame(
+  sample.id = pca$sample.id,
+  pop = factor(pop_code)[match(pca$sample.id, sample.id)],
+  EV1 = pca$eigenvect[, 1],
+  EV2 = pca$eigenvect[, 2]
+)
+
+plot(tab$EV2, tab$EV1, col = as.integer(tab$pop), pch = 19,
+     xlab = "PC2", ylab = "PC1", main = "PCA Score Plot")
+legend("bottomright", legend = levels(tab$pop), col = 1:nlevels(tab$pop), pch = 19)
+snpgdsClose(genofile)
+```
+
+- You can see that populations tend to from distinct clusters, and the first 2 PCs capture most of the populations structure.
+
+
+This plot is called the **parallel coordinates plot** and it compares the top 16 PCs for each individual across different populations. Similar patterns within populations indicate shared genetic structure.
+```{r}
+genofile <- snpgdsOpen(snpgdsExampleFileName())
+library(MASS)
+parcoord(pca$eigenvect[, 1:16], col = as.integer(factor(pop_code)))
+snpgdsClose(genofile)
+```
+
+The **Loadings Plot** shows which SNPs contribute to most to each PC. As you can see from the below plot, that SNP2 has the greatest affect to PC1.
+```{r}
+genofile <- snpgdsOpen(snpgdsExampleFileName())
+snp_load <- snpgdsPCASNPLoading(pca, genofile, num.thread = 1L, verbose = TRUE)
+plot(abs(snp_load$snploading[,1]), type = "h",
+     main = "SNP Loadings for PC1",
+     xlab = "SNPs",
+     ylab = "Absolute Loading")
+snpgdsClose(genofile)
+```
+
+
+A **scree plot** helps determine how many PCs are necessary to capture the majority of variance.
+
+```{r}
+genofile <- snpgdsOpen(snpgdsExampleFileName())
+# Perform PCA using SNPRelate
+pca <- snpgdsPCA(genofile, num.thread = 2)
+
+# Calculate variance explained
+pc.percent <- pca$varprop * 100
+
+# Plot the scree plot
+plot(pc.percent, type = "b",
+     xlab = "Principal Component",
+     ylab = "Percent Variance Explained",
+     main = "Scree Plot using SNPRelate")
+
+# Close the GDS file
+snpgdsClose(genofile)
+
+```
+
+- PC1 captures the largest proportion of variance
+- The variance explained deceases with each subsequent PC.
+
+
+## Evaluating PCA Results
+
+So coming back to evaluating PCA results, many useful plot function from the SNPRelate package does a great job evaluation of PCA.
+
+- Score Plot Interpretation: The distinct clustering in the score plot suggests that the top PCs capture population structure.
+- Parallel Coordinates Plot: Consistent patterns within populations validate the PCA in detecting structure.
+- Loadings Plot: Identifies SNPs contributing to genetic differences between populations.
+- Scree Plot: Guides selection of the number of PCs by identifying the point where the variance explained plateaus.
+
+
+## For choosing the number of PCs
+
+PCs that capture minimal variance may not significantly contribute to the analysis, and including too many PCs may introduce noise, while too few may fail to capture important structure.
+
 
 # Confounding and Bias in GWAS
 
 In a GWAS, confounding can occur when genetic ancestry affects both the genotype and the phenotype. For instance, consider a study investigating the association between a specific SNP and a disease. If the SNP has different allele frequencies across populations and the disease prevalence also varies by ancestry due to environmental or lifestyle factors, then ancestry becomes a confounder.
 
 ```{r}
+library(tidyverse)
 library(ggdag)
 library(dagitty)
 dag_conf <- dagitty('
@@ -115,17 +248,53 @@ This adjustment helps reduce the confounding effect by incorporating the first p
 A collider occurs when a variable is influenced by both the genotype and the trait. For example, suppose cholesterol levels are influenced by both smoking status (predictor) and body weight (outcome). If cholesterol levels are controlled for in the analysis, it could introduce a spurious association between smoking and body weight.
 
 ```{r}
-dag_col <- dagitty("
-dag {
-Smoking -> Cholesterol
-Weight -> Cholesterol}")
 
-ggdag(dag_col)+
-  theme_minimal()+
-  ggtitle("Collider bias example")
+collider_dag <- dagify(
+  Smoking ~ Cholesterol,
+  Weight ~ Cholesterol,
+  labels = c("Smoking" = "Smoking", "Weight" = "Weight", "Cholesterol" = "Cholesterol"),
+  exposure = "Smoking",
+  outcome = "Weight"
+)
+ggdag_classic(collider_dag)
 ```
 
 **By adjusting for the collider, a false association between smoking and weight may be introduced.** So, key takeaways are: (1) Adjust for confounders to reduce bias. (2) Avoid adjusting for colliders as it can introduce false associations.
+
+
+# Omitted Variable Bias
+
+Omitted variable bias occurs when a relevant variable is excluded form a regression model and leading to biased and inconsistent estimates of the regression coefficients. 
+
+This is a linear model: $$Y=X\beta+Z\gamma +\epsilon$$, Where
+
+- $Y$ is the outcome variable
+- $X$ is the independent variable
+- $Z$ is an omitted confounder
+- $\beta$ is the coefficient for $X$
+- $\gamma$ is the coefficient for $Z$
+- $\epsilon$ is the error term with $E[\epsilon]=0$
+
+Now, we supppose we mistakenly fit the following model, excluding $Z$:
+$$Y=X\hat{\beta} +u$$, Where:
+
+- $\hat{\beta}$ is the biased estimator of $\beta$
+- $u=Z\gamma +\epsilon$ is the composite error term
+
+We can write the OLS estimate for $\hat{\beta}$ as:
+$$\hat{\beta}=(X^TX)^{-1}X^TY$$
+
+If we substitute the true model into this equation:
+$$\hat{\beta}=(X^TX)^{-1}X^T(X\beta+Z\gamma +\epsilon)=\beta+(X^TX)^{-1}X^TZ\gamma +(X^TX)^{-1}X^TE[\epsilon]$$
+
+since $E[\epsilon]=0$,
+
+$$E[\hat{\beta}]=\beta+(X^TX)^{-1}X^TZ\gamma$$
+
+- **If X and Z are correlated, the bias will be non-zero**
+- **The magnitude and direction of the bias depend on both the strength of the correlation between X and Z and the effect of Z on Y**
+- **If X and Z are uncorrelated, the bias will be 0**
+
 
 # Adjusting for Population Structure in GWAS
 
@@ -145,39 +314,32 @@ model <- lm(trait ~ SNP1+pc1, data=pcadata)
 summary(model)
 ```
 
-# Evaluating PCA Results
-
-## Scree Plot
-
-A scree plot helps determine how many PCs are necessary to capture the majority of variance.
-
-```{r}
-library(SNPRelate)
-
-# Open the GDS file
-genofile <- snpgdsOpen(snpgdsExampleFileName())
-
-# Perform PCA using SNPRelate
-pca <- snpgdsPCA(genofile, num.thread = 2)
-
-# Calculate variance explained
-pc.percent <- pca$varprop * 100
-
-# Plot the scree plot
-plot(pc.percent, type = "b",
-     xlab = "Principal Component",
-     ylab = "Percent Variance Explained",
-     main = "Scree Plot using SNPRelate")
-
-# Close the GDS file
-snpgdsClose(genofile)
-
-```
-
-- PC1 captures the largest proportion of variance
-- The variance explained deceases with each subsequent PC.
 
 
+# Journal Clubs
+
+## Journal Club 4: "What is Ancestry?"
+
+- Discussed the concept of genetic ancestry and how it differs from genealogical ancestry.
+- Highlighted the challenges of defining ancestry categories, especially when genetic variation exists on a continuum.
+- Emphasized the role of recombination and how genetic material is inherited.
+- Introduced the concepts of local and global ancestry, which I have explained the distinction above.
+
+
+## Journal Club 5: "Genes Mirror Geography Within Europe"
+
+- Showed how PCA applied to genetic data can reveal geographical patterns.
+- Demonstrated that top principal components often correspond to geographic gradients.
+- Emphasized that population structure is a major confounder in GWAS.
+- Suggested using PCA as a tool for correcting for population stratification.
+
+
+## Journal Club 6: "SVMs for Genetic Ancestry"
+
+
+- Explored the use of Support Vector Machines (SVMs) in classifying genetic ancestry.
+- Noted that simple linear models may not be sufficient when ancestry is complex.
+- Introduced the concept of using SVMs with kernels to capture nonlinear relationships.
 
 
 

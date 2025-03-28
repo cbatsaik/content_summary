@@ -198,11 +198,21 @@ window.Quarto = {
   <li><a href="#performing-pca-in-r" id="toc-performing-pca-in-r" class="nav-link" data-scroll-target="#performing-pca-in-r"><span class="header-section-number">4.1</span> Performing PCA in R</a></li>
   <li><a href="#visualzing-pca-results" id="toc-visualzing-pca-results" class="nav-link" data-scroll-target="#visualzing-pca-results"><span class="header-section-number">4.2</span> Visualzing PCA results</a></li>
   </ul></li>
-  <li><a href="#confounding-and-bias-in-gwas" id="toc-confounding-and-bias-in-gwas" class="nav-link" data-scroll-target="#confounding-and-bias-in-gwas"><span class="header-section-number">5</span> Confounding and Bias in GWAS</a></li>
-  <li><a href="#adjusting-for-population-structure-in-gwas" id="toc-adjusting-for-population-structure-in-gwas" class="nav-link" data-scroll-target="#adjusting-for-population-structure-in-gwas"><span class="header-section-number">6</span> Adjusting for Population Structure in GWAS</a></li>
-  <li><a href="#evaluating-pca-results" id="toc-evaluating-pca-results" class="nav-link" data-scroll-target="#evaluating-pca-results"><span class="header-section-number">7</span> Evaluating PCA Results</a>
+  <li><a href="#evaluating-pca-results-efficiently" id="toc-evaluating-pca-results-efficiently" class="nav-link" data-scroll-target="#evaluating-pca-results-efficiently"><span class="header-section-number">5</span> Evaluating PCA Results Efficiently</a>
   <ul class="collapse">
-  <li><a href="#scree-plot" id="toc-scree-plot" class="nav-link" data-scroll-target="#scree-plot"><span class="header-section-number">7.1</span> Scree Plot</a></li>
+  <li><a href="#snprelate-package" id="toc-snprelate-package" class="nav-link" data-scroll-target="#snprelate-package"><span class="header-section-number">5.1</span> SNPRelate Package</a></li>
+  <li><a href="#visualizing-snprelate-pca-results" id="toc-visualizing-snprelate-pca-results" class="nav-link" data-scroll-target="#visualizing-snprelate-pca-results"><span class="header-section-number">5.2</span> Visualizing SNPRelate PCA Results</a></li>
+  <li><a href="#evaluating-pca-results" id="toc-evaluating-pca-results" class="nav-link" data-scroll-target="#evaluating-pca-results"><span class="header-section-number">5.3</span> Evaluating PCA Results</a></li>
+  <li><a href="#for-choosing-the-number-of-pcs" id="toc-for-choosing-the-number-of-pcs" class="nav-link" data-scroll-target="#for-choosing-the-number-of-pcs"><span class="header-section-number">5.4</span> For choosing the number of PCs</a></li>
+  </ul></li>
+  <li><a href="#confounding-and-bias-in-gwas" id="toc-confounding-and-bias-in-gwas" class="nav-link" data-scroll-target="#confounding-and-bias-in-gwas"><span class="header-section-number">6</span> Confounding and Bias in GWAS</a></li>
+  <li><a href="#omitted-variable-bias" id="toc-omitted-variable-bias" class="nav-link" data-scroll-target="#omitted-variable-bias"><span class="header-section-number">7</span> Omitted Variable Bias</a></li>
+  <li><a href="#adjusting-for-population-structure-in-gwas" id="toc-adjusting-for-population-structure-in-gwas" class="nav-link" data-scroll-target="#adjusting-for-population-structure-in-gwas"><span class="header-section-number">8</span> Adjusting for Population Structure in GWAS</a></li>
+  <li><a href="#journal-clubs" id="toc-journal-clubs" class="nav-link" data-scroll-target="#journal-clubs"><span class="header-section-number">9</span> Journal Clubs</a>
+  <ul class="collapse">
+  <li><a href="#journal-club-4-what-is-ancestry" id="toc-journal-club-4-what-is-ancestry" class="nav-link" data-scroll-target="#journal-club-4-what-is-ancestry"><span class="header-section-number">9.1</span> Journal Club 4: “What is Ancestry?”</a></li>
+  <li><a href="#journal-club-5-genes-mirror-geography-within-europe" id="toc-journal-club-5-genes-mirror-geography-within-europe" class="nav-link" data-scroll-target="#journal-club-5-genes-mirror-geography-within-europe"><span class="header-section-number">9.2</span> Journal Club 5: “Genes Mirror Geography Within Europe”</a></li>
+  <li><a href="#journal-club-6-svms-for-genetic-ancestry" id="toc-journal-club-6-svms-for-genetic-ancestry" class="nav-link" data-scroll-target="#journal-club-6-svms-for-genetic-ancestry"><span class="header-section-number">9.3</span> Journal Club 6: “SVMs for Genetic Ancestry”</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -347,13 +357,377 @@ dbl (17): population, trait, SNP1, SNP2, SNP3, SNP4, SNP5, SNP6, SNP7, SNP8,...
 <p>This is the Score plot. This tells us…</p>
 </section>
 </section>
-<section id="confounding-and-bias-in-gwas" class="level1" data-number="5">
-<h1 data-number="5"><span class="header-section-number">5</span> Confounding and Bias in GWAS</h1>
+<section id="evaluating-pca-results-efficiently" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Evaluating PCA Results Efficiently</h1>
+<section id="snprelate-package" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="snprelate-package"><span class="header-section-number">5.1</span> SNPRelate Package</h2>
+<p>SNPRelate is a powerful R package designed for analyzing large-scale genomic datasets efficiently. It is widely used for performing Principal Component Analysis (PCA), kinship analysis, Linkage Disequilibrium (LD) pruning, and other genetic association studies. This package is particularly beneficial in genome-wide association studies (GWAS) where population structure can act as a confounder, leading to spurious associations.</p>
+<p>Loading the library and exploring the tutorial</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(SNPRelate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: gdsfmt</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'gdsfmt' was built under R version 4.4.2</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vignette</span>(<span class="st">"SNPRelate"</span>, <span class="at">package =</span> <span class="st">"SNPRelate"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>starting httpd help server ...</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code> done</code></pre>
+</div>
+</div>
+<p>SNPRelate uses Genomic Data Structure (GDS) files for efficient data storage. For example, 279 individuals with sample IDs stored as sample.id, and 9088 SNPs with SNP information like position, chromosomes, and genotypes.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>genofile <span class="ot">&lt;-</span> <span class="fu">snpgdsOpen</span>(<span class="fu">snpgdsExampleFileName</span>())</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>genofile</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>File: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/SNPRelate/extdata/hapmap_geno.gds (709.6K)
++    [  ] *
+|--+ sample.id   { VStr8 279 ZIP(29.9%), 679B }
+|--+ snp.id   { Int32 9088 ZIP(34.8%), 12.3K }
+|--+ snp.rs.id   { VStr8 9088 ZIP(40.1%), 36.2K }
+|--+ snp.position   { Int32 9088 ZIP(94.7%), 33.6K }
+|--+ snp.chromosome   { UInt8 9088 ZIP(0.94%), 85B } *
+|--+ snp.allele   { VStr8 9088 ZIP(11.3%), 4.0K }
+|--+ genotype   { Bit2 279x9088, 619.0K } *
+\--+ sample.annot   [ data.frame ] *
+   |--+ family.id   { VStr8 279 ZIP(34.4%), 514B }
+   |--+ father.id   { VStr8 279 ZIP(31.5%), 220B }
+   |--+ mother.id   { VStr8 279 ZIP(30.9%), 214B }
+   |--+ sex   { VStr8 279 ZIP(17.0%), 95B }
+   \--+ pop.group   { VStr8 279 ZIP(6.18%), 69B }</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">snpgdsClose</span>(genofile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>We can extract population information. (1) CEU: Utah resient of European ancestry. (2) HCB: Han Chinese in Beijing. (3) JPT: Japanese in Tokyo. (4) YRI: Yoruba from Nigeria.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>genofile <span class="ot">&lt;-</span> <span class="fu">snpgdsOpen</span>(<span class="fu">snpgdsExampleFileName</span>())</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>pop_code <span class="ot">&lt;-</span> <span class="fu">read.gdsn</span>(<span class="fu">index.gdsn</span>(genofile, <span class="st">"sample.annot/pop.group"</span>))</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(pop_code)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>pop_code
+CEU HCB JPT YRI 
+ 92  47  47  93 </code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">snpgdsClose</span>(genofile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Linkage Disequilibrium pruning is a pre-processing step that removes highly correlated SNPs to reduce redundancy and imporve computational efficiency.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>genofile <span class="ot">&lt;-</span> <span class="fu">snpgdsOpen</span>(<span class="fu">snpgdsExampleFileName</span>())</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">494</span>)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>snpset <span class="ot">&lt;-</span> <span class="fu">snpgdsLDpruning</span>(genofile, <span class="at">ld.threshold =</span> <span class="fl">0.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>SNP pruning based on LD:
+Excluding 365 SNPs on non-autosomes
+Excluding 139 SNPs (monomorphic: TRUE, MAF: 0.005, missing rate: 0.05)
+    # of samples: 279
+    # of SNPs: 8,584
+    using 1 thread
+    sliding window: 500,000 basepairs, Inf SNPs
+    |LD| threshold: 0.2
+    method: composite
+Chrom 1: |====================|====================|
+    74.16%, 531 / 716 (Fri Mar 28 14:40:43 2025)
+Chrom 2: |====================|====================|
+    72.24%, 536 / 742 (Fri Mar 28 14:40:43 2025)
+Chrom 3: |====================|====================|
+    73.73%, 449 / 609 (Fri Mar 28 14:40:43 2025)
+Chrom 4: |====================|====================|
+    72.60%, 408 / 562 (Fri Mar 28 14:40:43 2025)
+Chrom 5: |====================|====================|
+    75.62%, 428 / 566 (Fri Mar 28 14:40:43 2025)
+Chrom 6: |====================|====================|
+    73.81%, 417 / 565 (Fri Mar 28 14:40:43 2025)
+Chrom 7: |====================|====================|
+    75.42%, 356 / 472 (Fri Mar 28 14:40:43 2025)
+Chrom 8: |====================|====================|
+    69.88%, 341 / 488 (Fri Mar 28 14:40:43 2025)
+Chrom 9: |====================|====================|
+    76.44%, 318 / 416 (Fri Mar 28 14:40:43 2025)
+Chrom 10: |====================|====================|
+    73.29%, 354 / 483 (Fri Mar 28 14:40:43 2025)
+Chrom 11: |====================|====================|
+    75.84%, 339 / 447 (Fri Mar 28 14:40:43 2025)
+Chrom 12: |====================|====================|
+    74.71%, 319 / 427 (Fri Mar 28 14:40:43 2025)
+Chrom 13: |====================|====================|
+    75.87%, 261 / 344 (Fri Mar 28 14:40:43 2025)
+Chrom 14: |====================|====================|
+    76.24%, 215 / 282 (Fri Mar 28 14:40:43 2025)
+Chrom 15: |====================|====================|
+    75.57%, 198 / 262 (Fri Mar 28 14:40:43 2025)
+Chrom 16: |====================|====================|
+    71.58%, 199 / 278 (Fri Mar 28 14:40:43 2025)
+Chrom 17: |====================|====================|
+    73.43%, 152 / 207 (Fri Mar 28 14:40:43 2025)
+Chrom 18: |====================|====================|
+    72.93%, 194 / 266 (Fri Mar 28 14:40:43 2025)
+Chrom 19: |====================|====================|
+    82.50%, 99 / 120 (Fri Mar 28 14:40:43 2025)
+Chrom 20: |====================|====================|
+    70.74%, 162 / 229 (Fri Mar 28 14:40:43 2025)
+Chrom 21: |====================|====================|
+    75.40%, 95 / 126 (Fri Mar 28 14:40:43 2025)
+Chrom 22: |====================|====================|
+    74.14%, 86 / 116 (Fri Mar 28 14:40:43 2025)
+6,457 markers are selected in total.</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>snpset.id <span class="ot">&lt;-</span> <span class="fu">unlist</span>(snpset)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(snpset.id)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 6457</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">snpgdsClose</span>(genofile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<ul>
+<li><strong>6,457 SNPs</strong> remain from the original 9,088.</li>
+</ul>
+<p>We can now run <strong>PCA</strong> on the LD-pruned SNPs.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>genofile <span class="ot">&lt;-</span> <span class="fu">snpgdsOpen</span>(<span class="fu">snpgdsExampleFileName</span>())</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>pca <span class="ot">&lt;-</span> <span class="fu">snpgdsPCA</span>(genofile, <span class="at">snp.id =</span> snpset.id, <span class="at">num.thread =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Principal Component Analysis (PCA) on genotypes:
+Excluding 2,631 SNPs (non-autosomes or non-selection)
+Excluding 0 SNP (monomorphic: TRUE, MAF: NaN, missing rate: NaN)
+    # of samples: 279
+    # of SNPs: 6,457
+    using 2 threads
+    # of principal components: 32
+PCA:    the sum of all selected genotypes (0,1,2) = 1808200
+CPU capabilities:
+Fri Mar 28 14:40:43 2025    (internal increment: 1760)
+
+[..................................................]  0%, ETC: ---        
+[==================================================] 100%, completed, 0s
+Fri Mar 28 14:40:43 2025    Begin (eigenvalues and eigenvectors)
+Fri Mar 28 14:40:43 2025    Done.</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">snpgdsClose</span>(genofile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<ul>
+<li><strong>Eigenvalues and Eigenvectors</strong> are calculated to represent the principal components (PCs), and SNPRelate can compute up to 32 PCs using an very efficient algorithms.</li>
+</ul>
+</section>
+<section id="visualizing-snprelate-pca-results" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="visualizing-snprelate-pca-results"><span class="header-section-number">5.2</span> Visualizing SNPRelate PCA Results</h2>
+<p>Below is the <strong>Score plot</strong> of the first two PCs:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>genofile <span class="ot">&lt;-</span> <span class="fu">snpgdsOpen</span>(<span class="fu">snpgdsExampleFileName</span>())</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>sample.id <span class="ot">&lt;-</span> <span class="fu">read.gdsn</span>(<span class="fu">index.gdsn</span>(genofile, <span class="st">"sample.id"</span>))</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>tab <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">sample.id =</span> pca<span class="sc">$</span>sample.id,</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">pop =</span> <span class="fu">factor</span>(pop_code)[<span class="fu">match</span>(pca<span class="sc">$</span>sample.id, sample.id)],</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">EV1 =</span> pca<span class="sc">$</span>eigenvect[, <span class="dv">1</span>],</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">EV2 =</span> pca<span class="sc">$</span>eigenvect[, <span class="dv">2</span>]</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(tab<span class="sc">$</span>EV2, tab<span class="sc">$</span>EV1, <span class="at">col =</span> <span class="fu">as.integer</span>(tab<span class="sc">$</span>pop), <span class="at">pch =</span> <span class="dv">19</span>,</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"PC2"</span>, <span class="at">ylab =</span> <span class="st">"PC1"</span>, <span class="at">main =</span> <span class="st">"PCA Score Plot"</span>)</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"bottomright"</span>, <span class="at">legend =</span> <span class="fu">levels</span>(tab<span class="sc">$</span>pop), <span class="at">col =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nlevels</span>(tab<span class="sc">$</span>pop), <span class="at">pch =</span> <span class="dv">19</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="unit2_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">snpgdsClose</span>(genofile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<ul>
+<li>You can see that populations tend to from distinct clusters, and the first 2 PCs capture most of the populations structure.</li>
+</ul>
+<p>This plot is called the <strong>parallel coordinates plot</strong> and it compares the top 16 PCs for each individual across different populations. Similar patterns within populations indicate shared genetic structure.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>genofile <span class="ot">&lt;-</span> <span class="fu">snpgdsOpen</span>(<span class="fu">snpgdsExampleFileName</span>())</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'MASS'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:dplyr':
+
+    select</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">parcoord</span>(pca<span class="sc">$</span>eigenvect[, <span class="dv">1</span><span class="sc">:</span><span class="dv">16</span>], <span class="at">col =</span> <span class="fu">as.integer</span>(<span class="fu">factor</span>(pop_code)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="unit2_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">snpgdsClose</span>(genofile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>The <strong>Loadings Plot</strong> shows which SNPs contribute to most to each PC. As you can see from the below plot, that SNP2 has the greatest affect to PC1.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>genofile <span class="ot">&lt;-</span> <span class="fu">snpgdsOpen</span>(<span class="fu">snpgdsExampleFileName</span>())</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>snp_load <span class="ot">&lt;-</span> <span class="fu">snpgdsPCASNPLoading</span>(pca, genofile, <span class="at">num.thread =</span> <span class="dv">1</span>L, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>SNP Loading:
+    # of samples: 279
+    # of SNPs: 6,457
+    using 1 thread
+    using the top 32 eigenvectors
+SNP Loading:    the sum of all selected genotypes (0,1,2) = 1808200
+Fri Mar 28 14:40:44 2025    (internal increment: 14092)
+
+[..................................................]  0%, ETC: ---        
+[==================================================] 100%, completed, 0s
+Fri Mar 28 14:40:44 2025    Done.</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">abs</span>(snp_load<span class="sc">$</span>snploading[,<span class="dv">1</span>]), <span class="at">type =</span> <span class="st">"h"</span>,</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"SNP Loadings for PC1"</span>,</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"SNPs"</span>,</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Absolute Loading"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="unit2_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">snpgdsClose</span>(genofile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>A <strong>scree plot</strong> helps determine how many PCs are necessary to capture the majority of variance.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>genofile <span class="ot">&lt;-</span> <span class="fu">snpgdsOpen</span>(<span class="fu">snpgdsExampleFileName</span>())</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform PCA using SNPRelate</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>pca <span class="ot">&lt;-</span> <span class="fu">snpgdsPCA</span>(genofile, <span class="at">num.thread =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Principal Component Analysis (PCA) on genotypes:
+Excluding 365 SNPs on non-autosomes
+Excluding 1 SNP (monomorphic: TRUE, MAF: NaN, missing rate: NaN)
+    # of samples: 279
+    # of SNPs: 8,722
+    using 2 threads
+    # of principal components: 32
+PCA:    the sum of all selected genotypes (0,1,2) = 2446510
+CPU capabilities:
+Fri Mar 28 14:40:44 2025    (internal increment: 1760)
+
+[..................................................]  0%, ETC: ---        
+[==================================================] 100%, completed, 0s
+Fri Mar 28 14:40:44 2025    Begin (eigenvalues and eigenvectors)
+Fri Mar 28 14:40:44 2025    Done.</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate variance explained</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>pc.percent <span class="ot">&lt;-</span> pca<span class="sc">$</span>varprop <span class="sc">*</span> <span class="dv">100</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the scree plot</span></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pc.percent, <span class="at">type =</span> <span class="st">"b"</span>,</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Principal Component"</span>,</span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Percent Variance Explained"</span>,</span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Scree Plot using SNPRelate"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="unit2_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Close the GDS file</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">snpgdsClose</span>(genofile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<ul>
+<li>PC1 captures the largest proportion of variance</li>
+<li>The variance explained deceases with each subsequent PC.</li>
+</ul>
+</section>
+<section id="evaluating-pca-results" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="evaluating-pca-results"><span class="header-section-number">5.3</span> Evaluating PCA Results</h2>
+<p>So coming back to evaluating PCA results, many useful plot function from the SNPRelate package does a great job evaluation of PCA.</p>
+<ul>
+<li>Score Plot Interpretation: The distinct clustering in the score plot suggests that the top PCs capture population structure.</li>
+<li>Parallel Coordinates Plot: Consistent patterns within populations validate the PCA in detecting structure.</li>
+<li>Loadings Plot: Identifies SNPs contributing to genetic differences between populations.</li>
+<li>Scree Plot: Guides selection of the number of PCs by identifying the point where the variance explained plateaus.</li>
+</ul>
+</section>
+<section id="for-choosing-the-number-of-pcs" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="for-choosing-the-number-of-pcs"><span class="header-section-number">5.4</span> For choosing the number of PCs</h2>
+<p>PCs that capture minimal variance may not significantly contribute to the analysis, and including too many PCs may introduce noise, while too few may fail to capture important structure.</p>
+</section>
+</section>
+<section id="confounding-and-bias-in-gwas" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Confounding and Bias in GWAS</h1>
 <p>In a GWAS, confounding can occur when genetic ancestry affects both the genotype and the phenotype. For instance, consider a study investigating the association between a specific SNP and a disease. If the SNP has different allele frequencies across populations and the disease prevalence also varies by ancestry due to environmental or lifestyle factors, then ancestry becomes a confounder.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggdag)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggdag)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>
@@ -366,23 +740,23 @@ Attaching package: 'ggdag'</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dagitty)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>dag_conf <span class="ot">&lt;-</span> <span class="fu">dagitty</span>(<span class="st">'</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="st">dag {</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="st">  Ancestry -&gt; Genotype</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="st">  Ancestry -&gt; Trait</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="st">  Genotype -&gt; Trait</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="st">'</span>)</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggdag</span>(dag_conf) <span class="sc">+</span></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Ancestry as a Confounder"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dagitty)</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>dag_conf <span class="ot">&lt;-</span> <span class="fu">dagitty</span>(<span class="st">'</span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="st">dag {</span></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a><span class="st">  Ancestry -&gt; Genotype</span></span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a><span class="st">  Ancestry -&gt; Trait</span></span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a><span class="st">  Genotype -&gt; Trait</span></span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a><span class="st">'</span>)</span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggdag</span>(dag_conf) <span class="sc">+</span></span>
+<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb47-12"><a href="#cb47-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Ancestry as a Confounder"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="unit2_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="unit2_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -392,9 +766,9 @@ Attaching package: 'ggdag'</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>pc1 <span class="ot">&lt;-</span> pca_scores[, <span class="st">"PC1"</span>]</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(trait <span class="sc">~</span> SNP1 <span class="sc">+</span> pc1, <span class="at">data =</span> pcadata)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>pc1 <span class="ot">&lt;-</span> pca_scores[, <span class="st">"PC1"</span>]</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(trait <span class="sc">~</span> SNP1 <span class="sc">+</span> pc1, <span class="at">data =</span> pcadata)</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -424,27 +798,54 @@ F-statistic: 250.5 on 2 and 997 DF,  p-value: &lt; 2.2e-16</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>dag_col <span class="ot">&lt;-</span> <span class="fu">dagitty</span>(<span class="st">"</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="st">dag {</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="st">Smoking -&gt; Cholesterol</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="st">Weight -&gt; Cholesterol}"</span>)</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggdag</span>(dag_col)<span class="sc">+</span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()<span class="sc">+</span></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Collider bias example"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>collider_dag <span class="ot">&lt;-</span> <span class="fu">dagify</span>(</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>  Smoking <span class="sc">~</span> Cholesterol,</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>  Weight <span class="sc">~</span> Cholesterol,</span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Smoking"</span> <span class="ot">=</span> <span class="st">"Smoking"</span>, <span class="st">"Weight"</span> <span class="ot">=</span> <span class="st">"Weight"</span>, <span class="st">"Cholesterol"</span> <span class="ot">=</span> <span class="st">"Cholesterol"</span>),</span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">exposure =</span> <span class="st">"Smoking"</span>,</span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">outcome =</span> <span class="st">"Weight"</span></span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggdag_classic</span>(collider_dag)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="unit2_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="unit2_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 <p><strong>By adjusting for the collider, a false association between smoking and weight may be introduced.</strong> So, key takeaways are: (1) Adjust for confounders to reduce bias. (2) Avoid adjusting for colliders as it can introduce false associations.</p>
 </section>
-<section id="adjusting-for-population-structure-in-gwas" class="level1" data-number="6">
-<h1 data-number="6"><span class="header-section-number">6</span> Adjusting for Population Structure in GWAS</h1>
+<section id="omitted-variable-bias" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Omitted Variable Bias</h1>
+<p>Omitted variable bias occurs when a relevant variable is excluded form a regression model and leading to biased and inconsistent estimates of the regression coefficients.</p>
+<p>This is a linear model: <span class="math display">\[Y=X\beta+Z\gamma +\epsilon\]</span>, Where</p>
+<ul>
+<li><span class="math inline">\(Y\)</span> is the outcome variable</li>
+<li><span class="math inline">\(X\)</span> is the independent variable</li>
+<li><span class="math inline">\(Z\)</span> is an omitted confounder</li>
+<li><span class="math inline">\(\beta\)</span> is the coefficient for <span class="math inline">\(X\)</span></li>
+<li><span class="math inline">\(\gamma\)</span> is the coefficient for <span class="math inline">\(Z\)</span></li>
+<li><span class="math inline">\(\epsilon\)</span> is the error term with <span class="math inline">\(E[\epsilon]=0\)</span></li>
+</ul>
+<p>Now, we supppose we mistakenly fit the following model, excluding <span class="math inline">\(Z\)</span>: <span class="math display">\[Y=X\hat{\beta} +u\]</span>, Where:</p>
+<ul>
+<li><span class="math inline">\(\hat{\beta}\)</span> is the biased estimator of <span class="math inline">\(\beta\)</span></li>
+<li><span class="math inline">\(u=Z\gamma +\epsilon\)</span> is the composite error term</li>
+</ul>
+<p>We can write the OLS estimate for <span class="math inline">\(\hat{\beta}\)</span> as: <span class="math display">\[\hat{\beta}=(X^TX)^{-1}X^TY\]</span></p>
+<p>If we substitute the true model into this equation: <span class="math display">\[\hat{\beta}=(X^TX)^{-1}X^T(X\beta+Z\gamma +\epsilon)=\beta+(X^TX)^{-1}X^TZ\gamma +(X^TX)^{-1}X^TE[\epsilon]\]</span></p>
+<p>since <span class="math inline">\(E[\epsilon]=0\)</span>,</p>
+<p><span class="math display">\[E[\hat{\beta}]=\beta+(X^TX)^{-1}X^TZ\gamma\]</span></p>
+<ul>
+<li><strong>If X and Z are correlated, the bias will be non-zero</strong></li>
+<li><strong>The magnitude and direction of the bias depend on both the strength of the correlation between X and Z and the effect of Z on Y</strong></li>
+<li><strong>If X and Z are uncorrelated, the bias will be 0</strong></li>
+</ul>
+</section>
+<section id="adjusting-for-population-structure-in-gwas" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> Adjusting for Population Structure in GWAS</h1>
 <p>To adjust for population structure, we can include PCs as covariates in the GWAS model:</p>
 <p><span class="math display">\[E[Y|X_j, \pi]=\alpha+\beta_j X_j +\gamma \pi\]</span> Where:</p>
 <ul>
@@ -455,9 +856,9 @@ F-statistic: 250.5 on 2 and 997 DF,  p-value: &lt; 2.2e-16</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>pc1 <span class="ot">&lt;-</span> pca_scores[, <span class="st">"PC1"</span>]</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(trait <span class="sc">~</span> SNP1<span class="sc">+</span>pc1, <span class="at">data=</span>pcadata)</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>pc1 <span class="ot">&lt;-</span> pca_scores[, <span class="st">"PC1"</span>]</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(trait <span class="sc">~</span> SNP1<span class="sc">+</span>pc1, <span class="at">data=</span>pcadata)</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -482,74 +883,32 @@ F-statistic: 250.5 on 2 and 997 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 </section>
-<section id="evaluating-pca-results" class="level1" data-number="7">
-<h1 data-number="7"><span class="header-section-number">7</span> Evaluating PCA Results</h1>
-<section id="scree-plot" class="level2" data-number="7.1">
-<h2 data-number="7.1" class="anchored" data-anchor-id="scree-plot"><span class="header-section-number">7.1</span> Scree Plot</h2>
-<p>A scree plot helps determine how many PCs are necessary to capture the majority of variance.</p>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(SNPRelate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: gdsfmt</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'gdsfmt' was built under R version 4.4.2</code></pre>
-</div>
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Open the GDS file</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>genofile <span class="ot">&lt;-</span> <span class="fu">snpgdsOpen</span>(<span class="fu">snpgdsExampleFileName</span>())</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform PCA using SNPRelate</span></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>pca <span class="ot">&lt;-</span> <span class="fu">snpgdsPCA</span>(genofile, <span class="at">num.thread =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>Principal Component Analysis (PCA) on genotypes:
-Excluding 365 SNPs on non-autosomes
-Excluding 1 SNP (monomorphic: TRUE, MAF: NaN, missing rate: NaN)
-    # of samples: 279
-    # of SNPs: 8,722
-    using 2 threads
-    # of principal components: 32
-PCA:    the sum of all selected genotypes (0,1,2) = 2446510
-CPU capabilities:
-Thu Mar 27 18:27:20 2025    (internal increment: 1760)
-
-[..................................................]  0%, ETC: ---        
-[==================================================] 100%, completed, 0s
-Thu Mar 27 18:27:20 2025    Begin (eigenvalues and eigenvectors)
-Thu Mar 27 18:27:20 2025    Done.</code></pre>
-</div>
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate variance explained</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>pc.percent <span class="ot">&lt;-</span> pca<span class="sc">$</span>varprop <span class="sc">*</span> <span class="dv">100</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the scree plot</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pc.percent, <span class="at">type =</span> <span class="st">"b"</span>,</span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Principal Component"</span>,</span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Percent Variance Explained"</span>,</span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Scree Plot using SNPRelate"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="unit2_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Close the GDS file</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">snpgdsClose</span>(genofile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
+<section id="journal-clubs" class="level1" data-number="9">
+<h1 data-number="9"><span class="header-section-number">9</span> Journal Clubs</h1>
+<section id="journal-club-4-what-is-ancestry" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="journal-club-4-what-is-ancestry"><span class="header-section-number">9.1</span> Journal Club 4: “What is Ancestry?”</h2>
 <ul>
-<li>PC1 captures the largest proportion of variance</li>
-<li>The variance explained deceases with each subsequent PC.</li>
+<li>Discussed the concept of genetic ancestry and how it differs from genealogical ancestry.</li>
+<li>Highlighted the challenges of defining ancestry categories, especially when genetic variation exists on a continuum.</li>
+<li>Emphasized the role of recombination and how genetic material is inherited.</li>
+<li>Introduced the concepts of local and global ancestry, which I have explained the distinction above.</li>
+</ul>
+</section>
+<section id="journal-club-5-genes-mirror-geography-within-europe" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="journal-club-5-genes-mirror-geography-within-europe"><span class="header-section-number">9.2</span> Journal Club 5: “Genes Mirror Geography Within Europe”</h2>
+<ul>
+<li>Showed how PCA applied to genetic data can reveal geographical patterns.</li>
+<li>Demonstrated that top principal components often correspond to geographic gradients.</li>
+<li>Emphasized that population structure is a major confounder in GWAS.</li>
+<li>Suggested using PCA as a tool for correcting for population stratification.</li>
+</ul>
+</section>
+<section id="journal-club-6-svms-for-genetic-ancestry" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="journal-club-6-svms-for-genetic-ancestry"><span class="header-section-number">9.3</span> Journal Club 6: “SVMs for Genetic Ancestry”</h2>
+<ul>
+<li>Explored the use of Support Vector Machines (SVMs) in classifying genetic ancestry.</li>
+<li>Noted that simple linear models may not be sufficient when ancestry is complex.</li>
+<li>Introduced the concept of using SVMs with kernels to capture nonlinear relationships.</li>
 </ul>
 
 
