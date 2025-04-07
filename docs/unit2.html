@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.4.555">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Charles Batsaikhan">
 
-<title>Statistical Genetics - Unit 2 – STAT 494 Content Summary</title>
+<title>STAT 494 Content Summary - Statistical Genetics - Unit 2</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -34,7 +34,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -104,7 +104,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -149,7 +149,7 @@ window.Quarto = {
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -172,7 +172,7 @@ window.Quarto = {
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
-            <div class="quarto-navbar-tools">
+          <div class="quarto-navbar-tools">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
       </div> <!-- /container-fluid -->
@@ -290,6 +290,18 @@ window.Quarto = {
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'ggplot2' was built under R version 4.3.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'tidyr' was built under R version 4.3.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'purrr' was built under R version 4.3.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'lubridate' was built under R version 4.3.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
 <pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
 ✔ dplyr     1.1.4     ✔ readr     2.1.5
 ✔ forcats   1.0.0     ✔ stringr   1.5.1
@@ -303,8 +315,11 @@ window.Quarto = {
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GGally)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GGally)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'GGally' was built under R version 4.3.2</code></pre>
+</div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Registered S3 method overwritten by 'GGally':
   method from   
@@ -312,8 +327,8 @@ window.Quarto = {
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>pcadata <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">'https://mac-stat.github.io/statgen/data/pca_toy_data.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>pcadata <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">'https://mac-stat.github.io/statgen/data/pca_toy_data.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 1000 Columns: 17
@@ -326,10 +341,10 @@ dbl (17): population, trait, SNP1, SNP2, SNP3, SNP4, SNP5, SNP6, SNP7, SNP8,...
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform PCA</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>geno <span class="ot">&lt;-</span> pcadata <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>population, <span class="sc">-</span>trait)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>pca_out <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(geno, <span class="at">center =</span> <span class="cn">TRUE</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>pca_scores <span class="ot">&lt;-</span> pca_out<span class="sc">$</span>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform PCA</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>geno <span class="ot">&lt;-</span> pcadata <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>population, <span class="sc">-</span>trait)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>pca_out <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(geno, <span class="at">center =</span> <span class="cn">TRUE</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>pca_scores <span class="ot">&lt;-</span> pca_out<span class="sc">$</span>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -338,13 +353,13 @@ dbl (17): population, trait, SNP1, SNP2, SNP3, SNP4, SNP5, SNP6, SNP7, SNP8,...
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>pca_scores_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(pca_scores) <span class="sc">%&gt;%</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">population =</span> pcadata<span class="sc">$</span>population)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pca_scores_df, <span class="fu">aes</span>(<span class="at">x =</span> PC1, <span class="at">y =</span> PC2, <span class="at">color =</span> <span class="fu">as.factor</span>(population))) <span class="sc">+</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.7</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"PC1 vs. PC2 Scores"</span>, <span class="at">color =</span> <span class="st">"Population"</span>) <span class="sc">+</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>pca_scores_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(pca_scores) <span class="sc">%&gt;%</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">population =</span> pcadata<span class="sc">$</span>population)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pca_scores_df, <span class="fu">aes</span>(<span class="at">x =</span> PC1, <span class="at">y =</span> PC2, <span class="at">color =</span> <span class="fu">as.factor</span>(population))) <span class="sc">+</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.7</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"PC1 vs. PC2 Scores"</span>, <span class="at">color =</span> <span class="st">"Population"</span>) <span class="sc">+</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -366,17 +381,20 @@ dbl (17): population, trait, SNP1, SNP2, SNP3, SNP4, SNP5, SNP6, SNP7, SNP8,...
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(SNPRelate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(SNPRelate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'SNPRelate' was built under R version 4.3.2</code></pre>
+</div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Loading required package: gdsfmt</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'gdsfmt' was built under R version 4.4.2</code></pre>
+<pre><code>SNPRelate -- supported by Streaming SIMD Extensions 2 (SSE2)</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vignette</span>(<span class="st">"SNPRelate"</span>, <span class="at">package =</span> <span class="st">"SNPRelate"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vignette</span>(<span class="st">"SNPRelate"</span>, <span class="at">package =</span> <span class="st">"SNPRelate"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>starting httpd help server ...</code></pre>
@@ -389,11 +407,11 @@ dbl (17): population, trait, SNP1, SNP2, SNP3, SNP4, SNP5, SNP6, SNP7, SNP8,...
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>genofile <span class="ot">&lt;-</span> <span class="fu">snpgdsOpen</span>(<span class="fu">snpgdsExampleFileName</span>())</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>genofile</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>genofile <span class="ot">&lt;-</span> <span class="fu">snpgdsOpen</span>(<span class="fu">snpgdsExampleFileName</span>())</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>genofile</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>File: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/SNPRelate/extdata/hapmap_geno.gds (709.6K)
+<pre><code>File: /Library/Frameworks/R.framework/Versions/4.3-x86_64/Resources/library/SNPRelate/extdata/hapmap_geno.gds (709.6K)
 +    [  ] *
 |--+ sample.id   { VStr8 279 ZIP(29.9%), 679B }
 |--+ snp.id   { Int32 9088 ZIP(34.8%), 12.3K }
@@ -411,16 +429,16 @@ dbl (17): population, trait, SNP1, SNP2, SNP3, SNP4, SNP5, SNP6, SNP7, SNP8,...
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">snpgdsClose</span>(genofile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">snpgdsClose</span>(genofile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>We can extract population information. (1) CEU: Utah resient of European ancestry. (2) HCB: Han Chinese in Beijing. (3) JPT: Japanese in Tokyo. (4) YRI: Yoruba from Nigeria.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>genofile <span class="ot">&lt;-</span> <span class="fu">snpgdsOpen</span>(<span class="fu">snpgdsExampleFileName</span>())</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>pop_code <span class="ot">&lt;-</span> <span class="fu">read.gdsn</span>(<span class="fu">index.gdsn</span>(genofile, <span class="st">"sample.annot/pop.group"</span>))</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(pop_code)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>genofile <span class="ot">&lt;-</span> <span class="fu">snpgdsOpen</span>(<span class="fu">snpgdsExampleFileName</span>())</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>pop_code <span class="ot">&lt;-</span> <span class="fu">read.gdsn</span>(<span class="fu">index.gdsn</span>(genofile, <span class="st">"sample.annot/pop.group"</span>))</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(pop_code)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>pop_code
@@ -429,16 +447,16 @@ CEU HCB JPT YRI
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">snpgdsClose</span>(genofile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">snpgdsClose</span>(genofile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>Linkage Disequilibrium pruning is a pre-processing step that removes highly correlated SNPs to reduce redundancy and imporve computational efficiency.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>genofile <span class="ot">&lt;-</span> <span class="fu">snpgdsOpen</span>(<span class="fu">snpgdsExampleFileName</span>())</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">494</span>)</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>snpset <span class="ot">&lt;-</span> <span class="fu">snpgdsLDpruning</span>(genofile, <span class="at">ld.threshold =</span> <span class="fl">0.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>genofile <span class="ot">&lt;-</span> <span class="fu">snpgdsOpen</span>(<span class="fu">snpgdsExampleFileName</span>())</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">494</span>)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>snpset <span class="ot">&lt;-</span> <span class="fu">snpgdsLDpruning</span>(genofile, <span class="at">ld.threshold =</span> <span class="fl">0.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>SNP pruning based on LD:
@@ -450,63 +468,63 @@ Excluding 139 SNPs (monomorphic: TRUE, MAF: 0.005, missing rate: 0.05)
     sliding window: 500,000 basepairs, Inf SNPs
     |LD| threshold: 0.2
     method: composite
-Chrom 1: |====================|====================|
-    74.16%, 531 / 716 (Fri Mar 28 14:40:43 2025)
-Chrom 2: |====================|====================|
-    72.24%, 536 / 742 (Fri Mar 28 14:40:43 2025)
-Chrom 3: |====================|====================|
-    73.73%, 449 / 609 (Fri Mar 28 14:40:43 2025)
-Chrom 4: |====================|====================|
-    72.60%, 408 / 562 (Fri Mar 28 14:40:43 2025)
-Chrom 5: |====================|====================|
-    75.62%, 428 / 566 (Fri Mar 28 14:40:43 2025)
-Chrom 6: |====================|====================|
-    73.81%, 417 / 565 (Fri Mar 28 14:40:43 2025)
-Chrom 7: |====================|====================|
-    75.42%, 356 / 472 (Fri Mar 28 14:40:43 2025)
-Chrom 8: |====================|====================|
-    69.88%, 341 / 488 (Fri Mar 28 14:40:43 2025)
-Chrom 9: |====================|====================|
-    76.44%, 318 / 416 (Fri Mar 28 14:40:43 2025)
-Chrom 10: |====================|====================|
-    73.29%, 354 / 483 (Fri Mar 28 14:40:43 2025)
-Chrom 11: |====================|====================|
-    75.84%, 339 / 447 (Fri Mar 28 14:40:43 2025)
-Chrom 12: |====================|====================|
-    74.71%, 319 / 427 (Fri Mar 28 14:40:43 2025)
-Chrom 13: |====================|====================|
-    75.87%, 261 / 344 (Fri Mar 28 14:40:43 2025)
-Chrom 14: |====================|====================|
-    76.24%, 215 / 282 (Fri Mar 28 14:40:43 2025)
-Chrom 15: |====================|====================|
-    75.57%, 198 / 262 (Fri Mar 28 14:40:43 2025)
-Chrom 16: |====================|====================|
-    71.58%, 199 / 278 (Fri Mar 28 14:40:43 2025)
-Chrom 17: |====================|====================|
-    73.43%, 152 / 207 (Fri Mar 28 14:40:43 2025)
-Chrom 18: |====================|====================|
-    72.93%, 194 / 266 (Fri Mar 28 14:40:43 2025)
-Chrom 19: |====================|====================|
-    82.50%, 99 / 120 (Fri Mar 28 14:40:43 2025)
-Chrom 20: |====================|====================|
-    70.74%, 162 / 229 (Fri Mar 28 14:40:43 2025)
-Chrom 21: |====================|====================|
-    75.40%, 95 / 126 (Fri Mar 28 14:40:43 2025)
-Chrom 22: |====================|====================|
-    74.14%, 86 / 116 (Fri Mar 28 14:40:43 2025)
-6,457 markers are selected in total.</code></pre>
+|====================|====================|
+Chromosome 1: 74.16%, 531/716
+|====================|====================|
+Chromosome 2: 71.29%, 529/742
+|====================|====================|
+Chromosome 3: 73.40%, 447/609
+|====================|====================|
+Chromosome 4: 72.78%, 409/562
+|====================|====================|
+Chromosome 5: 75.62%, 428/566
+|====================|====================|
+Chromosome 6: 73.98%, 418/565
+|====================|====================|
+Chromosome 7: 75.21%, 355/472
+|====================|====================|
+Chromosome 8: 69.88%, 341/488
+|====================|====================|
+Chromosome 9: 76.92%, 320/416
+|====================|====================|
+Chromosome 10: 73.29%, 354/483
+|====================|====================|
+Chromosome 11: 76.06%, 340/447
+|====================|====================|
+Chromosome 12: 74.47%, 318/427
+|====================|====================|
+Chromosome 13: 75.58%, 260/344
+|====================|====================|
+Chromosome 14: 75.89%, 214/282
+|====================|====================|
+Chromosome 15: 75.95%, 199/262
+|====================|====================|
+Chromosome 16: 70.86%, 197/278
+|====================|====================|
+Chromosome 17: 73.43%, 152/207
+|====================|====================|
+Chromosome 18: 73.68%, 196/266
+|====================|====================|
+Chromosome 19: 82.50%, 99/120
+|====================|====================|
+Chromosome 20: 71.62%, 164/229
+|====================|====================|
+Chromosome 21: 75.40%, 95/126
+|====================|====================|
+Chromosome 22: 74.14%, 86/116
+6,452 markers are selected in total.</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>snpset.id <span class="ot">&lt;-</span> <span class="fu">unlist</span>(snpset)</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(snpset.id)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>snpset.id <span class="ot">&lt;-</span> <span class="fu">unlist</span>(snpset)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(snpset.id)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 6457</code></pre>
+<pre><code>[1] 6452</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">snpgdsClose</span>(genofile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">snpgdsClose</span>(genofile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <ul>
@@ -516,29 +534,29 @@ Chrom 22: |====================|====================|
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>genofile <span class="ot">&lt;-</span> <span class="fu">snpgdsOpen</span>(<span class="fu">snpgdsExampleFileName</span>())</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>pca <span class="ot">&lt;-</span> <span class="fu">snpgdsPCA</span>(genofile, <span class="at">snp.id =</span> snpset.id, <span class="at">num.thread =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>genofile <span class="ot">&lt;-</span> <span class="fu">snpgdsOpen</span>(<span class="fu">snpgdsExampleFileName</span>())</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>pca <span class="ot">&lt;-</span> <span class="fu">snpgdsPCA</span>(genofile, <span class="at">snp.id =</span> snpset.id, <span class="at">num.thread =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Principal Component Analysis (PCA) on genotypes:
-Excluding 2,631 SNPs (non-autosomes or non-selection)
+Excluding 2,636 SNPs (non-autosomes or non-selection)
 Excluding 0 SNP (monomorphic: TRUE, MAF: NaN, missing rate: NaN)
     # of samples: 279
-    # of SNPs: 6,457
+    # of SNPs: 6,452
     using 2 threads
     # of principal components: 32
-PCA:    the sum of all selected genotypes (0,1,2) = 1808200
-CPU capabilities:
-Fri Mar 28 14:40:43 2025    (internal increment: 1760)
+PCA:    the sum of all selected genotypes (0,1,2) = 1809577
+CPU capabilities: Double-Precision SSE2
+Mon Apr  7 11:02:33 2025    (internal increment: 5504)
 
 [..................................................]  0%, ETC: ---        
 [==================================================] 100%, completed, 0s
-Fri Mar 28 14:40:43 2025    Begin (eigenvalues and eigenvectors)
-Fri Mar 28 14:40:43 2025    Done.</code></pre>
+Mon Apr  7 11:02:33 2025    Begin (eigenvalues and eigenvectors)
+Mon Apr  7 11:02:33 2025    Done.</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">snpgdsClose</span>(genofile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">snpgdsClose</span>(genofile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <ul>
@@ -551,19 +569,19 @@ Fri Mar 28 14:40:43 2025    Done.</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>genofile <span class="ot">&lt;-</span> <span class="fu">snpgdsOpen</span>(<span class="fu">snpgdsExampleFileName</span>())</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>sample.id <span class="ot">&lt;-</span> <span class="fu">read.gdsn</span>(<span class="fu">index.gdsn</span>(genofile, <span class="st">"sample.id"</span>))</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>tab <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">sample.id =</span> pca<span class="sc">$</span>sample.id,</span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">pop =</span> <span class="fu">factor</span>(pop_code)[<span class="fu">match</span>(pca<span class="sc">$</span>sample.id, sample.id)],</span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">EV1 =</span> pca<span class="sc">$</span>eigenvect[, <span class="dv">1</span>],</span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">EV2 =</span> pca<span class="sc">$</span>eigenvect[, <span class="dv">2</span>]</span>
-<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(tab<span class="sc">$</span>EV2, tab<span class="sc">$</span>EV1, <span class="at">col =</span> <span class="fu">as.integer</span>(tab<span class="sc">$</span>pop), <span class="at">pch =</span> <span class="dv">19</span>,</span>
-<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"PC2"</span>, <span class="at">ylab =</span> <span class="st">"PC1"</span>, <span class="at">main =</span> <span class="st">"PCA Score Plot"</span>)</span>
-<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"bottomright"</span>, <span class="at">legend =</span> <span class="fu">levels</span>(tab<span class="sc">$</span>pop), <span class="at">col =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nlevels</span>(tab<span class="sc">$</span>pop), <span class="at">pch =</span> <span class="dv">19</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>genofile <span class="ot">&lt;-</span> <span class="fu">snpgdsOpen</span>(<span class="fu">snpgdsExampleFileName</span>())</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>sample.id <span class="ot">&lt;-</span> <span class="fu">read.gdsn</span>(<span class="fu">index.gdsn</span>(genofile, <span class="st">"sample.id"</span>))</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>tab <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">sample.id =</span> pca<span class="sc">$</span>sample.id,</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">pop =</span> <span class="fu">factor</span>(pop_code)[<span class="fu">match</span>(pca<span class="sc">$</span>sample.id, sample.id)],</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">EV1 =</span> pca<span class="sc">$</span>eigenvect[, <span class="dv">1</span>],</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">EV2 =</span> pca<span class="sc">$</span>eigenvect[, <span class="dv">2</span>]</span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(tab<span class="sc">$</span>EV2, tab<span class="sc">$</span>EV1, <span class="at">col =</span> <span class="fu">as.integer</span>(tab<span class="sc">$</span>pop), <span class="at">pch =</span> <span class="dv">19</span>,</span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"PC2"</span>, <span class="at">ylab =</span> <span class="st">"PC1"</span>, <span class="at">main =</span> <span class="st">"PCA Score Plot"</span>)</span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"bottomright"</span>, <span class="at">legend =</span> <span class="fu">levels</span>(tab<span class="sc">$</span>pop), <span class="at">col =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nlevels</span>(tab<span class="sc">$</span>pop), <span class="at">pch =</span> <span class="dv">19</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -574,7 +592,7 @@ Fri Mar 28 14:40:43 2025    Done.</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">snpgdsClose</span>(genofile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">snpgdsClose</span>(genofile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <ul>
@@ -584,8 +602,8 @@ Fri Mar 28 14:40:43 2025    Done.</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>genofile <span class="ot">&lt;-</span> <span class="fu">snpgdsOpen</span>(<span class="fu">snpgdsExampleFileName</span>())</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>genofile <span class="ot">&lt;-</span> <span class="fu">snpgdsOpen</span>(<span class="fu">snpgdsExampleFileName</span>())</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>
@@ -598,7 +616,7 @@ Attaching package: 'MASS'</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">parcoord</span>(pca<span class="sc">$</span>eigenvect[, <span class="dv">1</span><span class="sc">:</span><span class="dv">16</span>], <span class="at">col =</span> <span class="fu">as.integer</span>(<span class="fu">factor</span>(pop_code)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">parcoord</span>(pca<span class="sc">$</span>eigenvect[, <span class="dv">1</span><span class="sc">:</span><span class="dv">16</span>], <span class="at">col =</span> <span class="fu">as.integer</span>(<span class="fu">factor</span>(pop_code)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -609,35 +627,35 @@ Attaching package: 'MASS'</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">snpgdsClose</span>(genofile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">snpgdsClose</span>(genofile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>The <strong>Loadings Plot</strong> shows which SNPs contribute to most to each PC. As you can see from the below plot, that SNP2 has the greatest affect to PC1.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>genofile <span class="ot">&lt;-</span> <span class="fu">snpgdsOpen</span>(<span class="fu">snpgdsExampleFileName</span>())</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>snp_load <span class="ot">&lt;-</span> <span class="fu">snpgdsPCASNPLoading</span>(pca, genofile, <span class="at">num.thread =</span> <span class="dv">1</span>L, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>genofile <span class="ot">&lt;-</span> <span class="fu">snpgdsOpen</span>(<span class="fu">snpgdsExampleFileName</span>())</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>snp_load <span class="ot">&lt;-</span> <span class="fu">snpgdsPCASNPLoading</span>(pca, genofile, <span class="at">num.thread =</span> <span class="dv">1</span>L, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>SNP Loading:
     # of samples: 279
-    # of SNPs: 6,457
+    # of SNPs: 6,452
     using 1 thread
     using the top 32 eigenvectors
-SNP Loading:    the sum of all selected genotypes (0,1,2) = 1808200
-Fri Mar 28 14:40:44 2025    (internal increment: 14092)
+SNP Loading:    the sum of all selected genotypes (0,1,2) = 1809577
+Mon Apr  7 11:02:33 2025    (internal increment: 44040)
 
 [..................................................]  0%, ETC: ---        
 [==================================================] 100%, completed, 0s
-Fri Mar 28 14:40:44 2025    Done.</code></pre>
+Mon Apr  7 11:02:33 2025    Done.</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">abs</span>(snp_load<span class="sc">$</span>snploading[,<span class="dv">1</span>]), <span class="at">type =</span> <span class="st">"h"</span>,</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"SNP Loadings for PC1"</span>,</span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"SNPs"</span>,</span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Absolute Loading"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">abs</span>(snp_load<span class="sc">$</span>snploading[,<span class="dv">1</span>]), <span class="at">type =</span> <span class="st">"h"</span>,</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"SNP Loadings for PC1"</span>,</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"SNPs"</span>,</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Absolute Loading"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -648,16 +666,16 @@ Fri Mar 28 14:40:44 2025    Done.</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">snpgdsClose</span>(genofile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">snpgdsClose</span>(genofile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>A <strong>scree plot</strong> helps determine how many PCs are necessary to capture the majority of variance.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>genofile <span class="ot">&lt;-</span> <span class="fu">snpgdsOpen</span>(<span class="fu">snpgdsExampleFileName</span>())</span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform PCA using SNPRelate</span></span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>pca <span class="ot">&lt;-</span> <span class="fu">snpgdsPCA</span>(genofile, <span class="at">num.thread =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>genofile <span class="ot">&lt;-</span> <span class="fu">snpgdsOpen</span>(<span class="fu">snpgdsExampleFileName</span>())</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform PCA using SNPRelate</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>pca <span class="ot">&lt;-</span> <span class="fu">snpgdsPCA</span>(genofile, <span class="at">num.thread =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Principal Component Analysis (PCA) on genotypes:
@@ -668,24 +686,24 @@ Excluding 1 SNP (monomorphic: TRUE, MAF: NaN, missing rate: NaN)
     using 2 threads
     # of principal components: 32
 PCA:    the sum of all selected genotypes (0,1,2) = 2446510
-CPU capabilities:
-Fri Mar 28 14:40:44 2025    (internal increment: 1760)
+CPU capabilities: Double-Precision SSE2
+Mon Apr  7 11:02:34 2025    (internal increment: 5504)
 
 [..................................................]  0%, ETC: ---        
 [==================================================] 100%, completed, 0s
-Fri Mar 28 14:40:44 2025    Begin (eigenvalues and eigenvectors)
-Fri Mar 28 14:40:44 2025    Done.</code></pre>
+Mon Apr  7 11:02:34 2025    Begin (eigenvalues and eigenvectors)
+Mon Apr  7 11:02:34 2025    Done.</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate variance explained</span></span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>pc.percent <span class="ot">&lt;-</span> pca<span class="sc">$</span>varprop <span class="sc">*</span> <span class="dv">100</span></span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the scree plot</span></span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pc.percent, <span class="at">type =</span> <span class="st">"b"</span>,</span>
-<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Principal Component"</span>,</span>
-<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Percent Variance Explained"</span>,</span>
-<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Scree Plot using SNPRelate"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate variance explained</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>pc.percent <span class="ot">&lt;-</span> pca<span class="sc">$</span>varprop <span class="sc">*</span> <span class="dv">100</span></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the scree plot</span></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pc.percent, <span class="at">type =</span> <span class="st">"b"</span>,</span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Principal Component"</span>,</span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Percent Variance Explained"</span>,</span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Scree Plot using SNPRelate"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -696,8 +714,8 @@ Fri Mar 28 14:40:44 2025    Done.</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Close the GDS file</span></span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">snpgdsClose</span>(genofile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Close the GDS file</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="fu">snpgdsClose</span>(genofile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <ul>
@@ -726,9 +744,12 @@ Fri Mar 28 14:40:44 2025    Done.</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggdag)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggdag)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'ggdag' was built under R version 4.3.3</code></pre>
+</div>
 <div class="cell-output cell-output-stderr">
 <pre><code>
 Attaching package: 'ggdag'</code></pre>
@@ -740,18 +761,18 @@ Attaching package: 'ggdag'</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dagitty)</span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>dag_conf <span class="ot">&lt;-</span> <span class="fu">dagitty</span>(<span class="st">'</span></span>
-<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="st">dag {</span></span>
-<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a><span class="st">  Ancestry -&gt; Genotype</span></span>
-<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a><span class="st">  Ancestry -&gt; Trait</span></span>
-<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a><span class="st">  Genotype -&gt; Trait</span></span>
-<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
-<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a><span class="st">'</span>)</span>
-<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggdag</span>(dag_conf) <span class="sc">+</span></span>
-<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb47-12"><a href="#cb47-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Ancestry as a Confounder"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dagitty)</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>dag_conf <span class="ot">&lt;-</span> <span class="fu">dagitty</span>(<span class="st">'</span></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="st">dag {</span></span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a><span class="st">  Ancestry -&gt; Genotype</span></span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a><span class="st">  Ancestry -&gt; Trait</span></span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a><span class="st">  Genotype -&gt; Trait</span></span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a><span class="st">'</span>)</span>
+<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggdag</span>(dag_conf) <span class="sc">+</span></span>
+<span id="cb54-11"><a href="#cb54-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb54-12"><a href="#cb54-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Ancestry as a Confounder"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -766,9 +787,9 @@ Attaching package: 'ggdag'</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>pc1 <span class="ot">&lt;-</span> pca_scores[, <span class="st">"PC1"</span>]</span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(trait <span class="sc">~</span> SNP1 <span class="sc">+</span> pc1, <span class="at">data =</span> pcadata)</span>
-<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>pc1 <span class="ot">&lt;-</span> pca_scores[, <span class="st">"PC1"</span>]</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(trait <span class="sc">~</span> SNP1 <span class="sc">+</span> pc1, <span class="at">data =</span> pcadata)</span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -798,14 +819,14 @@ F-statistic: 250.5 on 2 and 997 DF,  p-value: &lt; 2.2e-16</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>collider_dag <span class="ot">&lt;-</span> <span class="fu">dagify</span>(</span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>  Smoking <span class="sc">~</span> Cholesterol,</span>
-<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>  Weight <span class="sc">~</span> Cholesterol,</span>
-<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Smoking"</span> <span class="ot">=</span> <span class="st">"Smoking"</span>, <span class="st">"Weight"</span> <span class="ot">=</span> <span class="st">"Weight"</span>, <span class="st">"Cholesterol"</span> <span class="ot">=</span> <span class="st">"Cholesterol"</span>),</span>
-<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">exposure =</span> <span class="st">"Smoking"</span>,</span>
-<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">outcome =</span> <span class="st">"Weight"</span></span>
-<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggdag_classic</span>(collider_dag)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>collider_dag <span class="ot">&lt;-</span> <span class="fu">dagify</span>(</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>  Smoking <span class="sc">~</span> Cholesterol,</span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>  Weight <span class="sc">~</span> Cholesterol,</span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Smoking"</span> <span class="ot">=</span> <span class="st">"Smoking"</span>, <span class="st">"Weight"</span> <span class="ot">=</span> <span class="st">"Weight"</span>, <span class="st">"Cholesterol"</span> <span class="ot">=</span> <span class="st">"Cholesterol"</span>),</span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">exposure =</span> <span class="st">"Smoking"</span>,</span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">outcome =</span> <span class="st">"Weight"</span></span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggdag_classic</span>(collider_dag)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -856,9 +877,9 @@ F-statistic: 250.5 on 2 and 997 DF,  p-value: &lt; 2.2e-16</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>pc1 <span class="ot">&lt;-</span> pca_scores[, <span class="st">"PC1"</span>]</span>
-<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(trait <span class="sc">~</span> SNP1<span class="sc">+</span>pc1, <span class="at">data=</span>pcadata)</span>
-<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>pc1 <span class="ot">&lt;-</span> pca_scores[, <span class="st">"PC1"</span>]</span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(trait <span class="sc">~</span> SNP1<span class="sc">+</span>pc1, <span class="at">data=</span>pcadata)</span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -887,29 +908,32 @@ F-statistic: 250.5 on 2 and 997 DF,  p-value: &lt; 2.2e-16</code></pre>
 <h1 data-number="9"><span class="header-section-number">9</span> Journal Clubs</h1>
 <section id="journal-club-4-what-is-ancestry" class="level2" data-number="9.1">
 <h2 data-number="9.1" class="anchored" data-anchor-id="journal-club-4-what-is-ancestry"><span class="header-section-number">9.1</span> Journal Club 4: “What is Ancestry?”</h2>
+<p>This paper talks about the complex and often misunderstood concept of ancestry in the context of genetics. Mathieson and Scally argue that genetic ancestry is not fixed identity or a clean label but rather a statement about shared segments of inherited DNA. Importantly, they distinguish genealogical ancestry from genetic ancestry. Since DNA is reshuffled via recombination each generation, we inherit only fragments from many ancestors, and not necessarily from all of them.</p>
+<p>Some Key Takeaways:</p>
 <ul>
-<li>Discussed the concept of genetic ancestry and how it differs from genealogical ancestry.</li>
-<li>Highlighted the challenges of defining ancestry categories, especially when genetic variation exists on a continuum.</li>
-<li>Emphasized the role of recombination and how genetic material is inherited.</li>
-<li>Introduced the concepts of local and global ancestry, which I have explained the distinction above.</li>
+<li>Ancestry is not categorical: any attempt to box people into rigid population labels is both scientifically misleading and ethically wrong.</li>
+<li>Discussions of ancestry must balance scientific accuracy with social responsibility. Misinterpretations can lead to oversimplified or even harmful narratives about identity and race.</li>
+<li>The paper raises concerns about combining genetic similarity with identity categories and emphasizing that the importance of transparent, careful communication when reporting genetic ancestry.</li>
 </ul>
 </section>
 <section id="journal-club-5-genes-mirror-geography-within-europe" class="level2" data-number="9.2">
 <h2 data-number="9.2" class="anchored" data-anchor-id="journal-club-5-genes-mirror-geography-within-europe"><span class="header-section-number">9.2</span> Journal Club 5: “Genes Mirror Geography Within Europe”</h2>
+<p>This study applies PCA to European genetic data and shows a stunning result: when plotted, the top PCs align geographically with a map of Europe. PC1 captures a northwest-to-southeast, and PC2 captures a northeast-to-southwest. That is the genetic varaition across Europe.</p>
+<p>Some Key Takeaways:</p>
 <ul>
-<li>Showed how PCA applied to genetic data can reveal geographical patterns.</li>
-<li>Demonstrated that top principal components often correspond to geographic gradients.</li>
-<li>Emphasized that population structure is a major confounder in GWAS.</li>
-<li>Suggested using PCA as a tool for correcting for population stratification.</li>
+<li>PCA effectively picks up on population structure, even subtle differences due to historical migration.</li>
+<li>Study shows that there is no sharp boundary between populations. Genetic variation exists along gradients.</li>
+<li>This study suggested that phenotype differences correlated with geography could produce spurious associations in GWAS if population structure is not adjusted for.</li>
 </ul>
 </section>
 <section id="journal-club-6-svms-for-genetic-ancestry" class="level2" data-number="9.3">
 <h2 data-number="9.3" class="anchored" data-anchor-id="journal-club-6-svms-for-genetic-ancestry"><span class="header-section-number">9.3</span> Journal Club 6: “SVMs for Genetic Ancestry”</h2>
+<p>This paper talked about how machine learning and model-based methods are used to infer ancestry from genotype data. Tools like PCA, Random Forests, and SVMs, as well as Bayesian models.</p>
 <ul>
-<li>Explored the use of Support Vector Machines (SVMs) in classifying genetic ancestry.</li>
-<li>Noted that simple linear models may not be sufficient when ancestry is complex.</li>
-<li>Introduced the concept of using SVMs with kernels to capture nonlinear relationships.</li>
+<li>SVMs and PCA can be useful for classification and visualization of ancestry, but genetic ancestry does not equal to race/ethnicity.</li>
+<li>Inference can become ethically complicated when individuals who self-identify as mixed race are excluded.</li>
 </ul>
+<p>Additionally, the paper notes that phenotypic traits can also correlate with geography, so failing to control for population structure could lead to confoudning in GWAS.</p>
 
 
 </section>
@@ -1095,7 +1119,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const onCopySuccess = function(e) {
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -1127,29 +1162,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
   });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
-    });
-    clipboardModal.on('success', onCopySuccess);
-  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -1157,7 +1170,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {

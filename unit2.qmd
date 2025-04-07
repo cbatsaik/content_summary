@@ -248,7 +248,6 @@ This adjustment helps reduce the confounding effect by incorporating the first p
 A collider occurs when a variable is influenced by both the genotype and the trait. For example, suppose cholesterol levels are influenced by both smoking status (predictor) and body weight (outcome). If cholesterol levels are controlled for in the analysis, it could introduce a spurious association between smoking and body weight.
 
 ```{r}
-
 collider_dag <- dagify(
   Smoking ~ Cholesterol,
   Weight ~ Cholesterol,
@@ -320,26 +319,32 @@ summary(model)
 
 ## Journal Club 4: "What is Ancestry?"
 
-- Discussed the concept of genetic ancestry and how it differs from genealogical ancestry.
-- Highlighted the challenges of defining ancestry categories, especially when genetic variation exists on a continuum.
-- Emphasized the role of recombination and how genetic material is inherited.
-- Introduced the concepts of local and global ancestry, which I have explained the distinction above.
+This paper talks about the complex and often misunderstood concept of ancestry in the context of genetics. Mathieson and Scally argue that genetic ancestry is not fixed identity or a clean label but rather a statement about shared segments of inherited DNA. Importantly, they distinguish genealogical ancestry from genetic ancestry. Since DNA is reshuffled via recombination each generation, we inherit only fragments from many ancestors, and not necessarily from all of them.
+
+Some Key Takeaways:
+
+- Ancestry is not categorical: any attempt to box people into rigid population labels is both scientifically misleading and ethically wrong.
+- Discussions of ancestry must balance scientific accuracy with social responsibility. Misinterpretations can lead to oversimplified or even harmful narratives about identity and race.
+- The paper raises concerns about combining genetic similarity with identity categories and emphasizing that the importance of transparent, careful communication when reporting genetic ancestry.
 
 
 ## Journal Club 5: "Genes Mirror Geography Within Europe"
 
-- Showed how PCA applied to genetic data can reveal geographical patterns.
-- Demonstrated that top principal components often correspond to geographic gradients.
-- Emphasized that population structure is a major confounder in GWAS.
-- Suggested using PCA as a tool for correcting for population stratification.
+This study applies PCA to European genetic data and shows a stunning result: when plotted, the top PCs align geographically with a map of Europe. PC1 captures a northwest-to-southeast, and PC2 captures a northeast-to-southwest. That is the genetic varaition across Europe.
+
+Some Key Takeaways:
+
+- PCA effectively picks up on population structure, even subtle differences due to historical migration.
+- Study shows that there is no sharp boundary between populations. Genetic variation exists along gradients.
+- This study suggested that phenotype differences correlated with geography could produce spurious associations in GWAS if population structure is not adjusted for.
 
 
 ## Journal Club 6: "SVMs for Genetic Ancestry"
 
+This paper talked about how machine learning and model-based methods are used to infer ancestry from genotype data. Tools like PCA, Random Forests, and SVMs, as well as Bayesian models.
 
-- Explored the use of Support Vector Machines (SVMs) in classifying genetic ancestry.
-- Noted that simple linear models may not be sufficient when ancestry is complex.
-- Introduced the concept of using SVMs with kernels to capture nonlinear relationships.
+- SVMs and PCA can be useful for classification and visualization of ancestry, but genetic ancestry does not equal to race/ethnicity.
+- Inference can become ethically complicated when individuals who self-identify as mixed race are excluded.
 
-
+Additionally, the paper notes that phenotypic traits can also correlate with geography, so failing to control for population structure could lead to confoudning in GWAS.
 
